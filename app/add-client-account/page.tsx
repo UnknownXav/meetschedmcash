@@ -16,6 +16,7 @@ import { X } from "@/components/icons";
 
 // Validation schema
 const clientAccountSchema = z.object({
+  email: z.string().email("Invalid email address"),
   username: z.string().min(3, "Username must be at least 3 characters"),
   password: z.string()
     .min(8, "Password must be at least 8 characters")
@@ -27,6 +28,7 @@ const clientAccountSchema = z.object({
 
 export interface ClientAccount {
   id: string;
+  email: string;
   username: string;
   password: string;
   dateCreated: string;
@@ -53,6 +55,7 @@ export default function AddClientAccount() {
   }, [user, router]);
 
   const [formData, setFormData] = useState({
+    email: "",
     username: "",
     password: "",
   });
@@ -108,11 +111,12 @@ export default function AddClientAccount() {
 
       // Create new client account
       const newAccount: Omit<ClientAccount, 'id'> = {
+        email: formData.email,
         username: formData.username,
         password: hashedPassword,
         dateCreated: new Date().toISOString(),
         active: true,
-        createdBy: user?.email ?? "unknown",
+        createdBy: ""
       };
 
       await addDoc(collection(db, "clients"), newAccount);
@@ -152,6 +156,22 @@ export default function AddClientAccount() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={errors.email ? "border-red-500" : ""}
+                placeholder="Enter email"
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email}</p>
+              )}
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input
                 id="username"
@@ -184,8 +204,8 @@ export default function AddClientAccount() {
             </div>
 
             <Button type="submit" className="w-full bg-red-500 hover:bg-red-600">
-            Create Account
-          </Button>
+              Create Account
+            </Button>
           </form>
         </CardContent>
       </Card>

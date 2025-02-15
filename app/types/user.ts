@@ -13,6 +13,7 @@ export interface User {
   createdAt: Timestamp;
   lastLogin?: Timestamp;
   createdBy?: string;
+  
 }
 
 export interface ClientAccount {
@@ -51,7 +52,7 @@ export interface Referral {
   referrerId: string;
   referredUserId: string;
   status: string;
-  dateStarted?: Date;
+  dateStarted?: string;
   companyName: string;
   dateOnboarded: string;
 }

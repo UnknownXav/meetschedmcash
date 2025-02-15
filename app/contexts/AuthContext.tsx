@@ -1,13 +1,17 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { usePathname, useRouter } from "next/navigation";
-import { auth, db } from "@/lib/firebase"; // Import existing Firebase instances
-import { User } from "../types/user";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { compare } from "bcryptjs";
 
 type UserRole = "McashDivision" | "SpbdDivision" | "RegionalManager" | null;
+
+interface User {
+  name: string;
+  username: string;
+  email: string;
+  role: UserRole;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -19,84 +23,125 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
-  const router = useRouter();
-  const pathname = usePathname();
 
+  // Load user from localStorage on mount.
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      try {
-        if (currentUser) {
-          const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            setUser({ name: userData.name, role: userData.role } as User);
-            
-            // Only redirect if we're on the login page
-            if (pathname === '/login') {
-              switch (userData.role) {
-                case "McashDivision":
-                  router.push("/mcash-division-dashboard");
-                  break;
-                case "SpbdDivision":
-                  router.push("/spbd-division-dashboard");
-                  break;
-                case "RegionalManager":
-                  router.push("/regional-manager-dashboard");
-                  break;
-              }
-            }
-          }
-        } else {
-          setUser(null);
-          // Only redirect to login if we're not already there
-          if (pathname !== '/login') {
-            router.push("/login");
-          }
-        }
-      } catch (error) {
-        console.error("Error in auth state change:", error);
-        setUser(null);
-      } finally {
-        setIsInitialized(true);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [router, pathname]);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   const login = async (username: string, password: string): Promise<boolean> => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, username, password);
-      const user = userCredential.user;
+    const db = getFirestore();
 
-      const userDoc = await getDoc(doc(db, "users", user.uid));
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setUser({ name: userData.name, role: userData.role } as User);
-        return true;
+    // ----- 1. Try logging in using the "clients" collection (RegionalManager) -----
+    try {
+      const clientsRef = collection(db, "clients");
+      const clientQuery = query(clientsRef, where("username", "==", username));
+      const clientSnapshot = await getDocs(clientQuery);
+
+      if (!clientSnapshot.empty) {
+        let clientDoc: any = null;
+        clientSnapshot.forEach((doc) => {
+          clientDoc = { id: doc.id, ...doc.data() };
+        });
+        if (clientDoc) {
+          const storedHashedPassword = clientDoc.password;
+          const passwordMatches = await compare(password, storedHashedPassword);
+          if (!passwordMatches) {
+            console.error("Invalid password for client account");
+            return false;
+          }
+          const userData: User = {
+            name: clientDoc.companyName || clientDoc.username,
+            username: clientDoc.username,
+            email: clientDoc.email,
+            role: "RegionalManager",
+          };
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+          return true;
+        }
       }
-      return false;
     } catch (error) {
-      console.error("Login failed:", error);
-      return false;
+      console.error("Error logging in via clients collection:", error);
     }
+
+    // ----- 2. Try logging in using the "mcashDivisionAccounts" collection (McashDivision) -----
+    try {
+      const mcashRef = collection(db, "mcashDivisionAccounts");
+      const mcashQuery = query(mcashRef, where("username", "==", username));
+      const mcashSnapshot = await getDocs(mcashQuery);
+
+      if (!mcashSnapshot.empty) {
+        let mcashDoc: any = null;
+        mcashSnapshot.forEach((doc) => {
+          mcashDoc = { id: doc.id, ...doc.data() };
+        });
+        if (mcashDoc) {
+          const storedHashedPassword = mcashDoc.password;
+          const passwordMatches = await compare(password, storedHashedPassword);
+          if (!passwordMatches) {
+            console.error("Invalid password for McashDivision account");
+            return false;
+          }
+          const userData: User = {
+            name: mcashDoc.name || mcashDoc.username,
+            username: mcashDoc.username,
+            email: mcashDoc.email,
+            role: "McashDivision",
+          };
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+          return true;
+        }
+      }
+    } catch (error) {
+      console.error("Error logging in via mcashDivisionAccounts collection:", error);
+    }
+
+    // ----- 3. Try logging in using the "spbdDivisionAccounts" collection (SpbdDivision) -----
+    try {
+      const spbdRef = collection(db, "spbdDivisionAccounts");
+      const spbdQuery = query(spbdRef, where("username", "==", username));
+      const spbdSnapshot = await getDocs(spbdQuery);
+
+      if (!spbdSnapshot.empty) {
+        let spbdDoc: any = null;
+        spbdSnapshot.forEach((doc) => {
+          spbdDoc = { id: doc.id, ...doc.data() };
+        });
+        if (spbdDoc) {
+          const storedHashedPassword = spbdDoc.password;
+          const passwordMatches = await compare(password, storedHashedPassword);
+          if (!passwordMatches) {
+            console.error("Invalid password for SpbdDivision account");
+            return false;
+          }
+          const userData: User = {
+            name: spbdDoc.name || spbdDoc.username,
+            username: spbdDoc.username,
+            email: spbdDoc.email,
+            role: "SpbdDivision",
+          };
+          setUser(userData);
+          localStorage.setItem("user", JSON.stringify(userData));
+          return true;
+        }
+      }
+    } catch (error) {
+      console.error("Error logging in via spbdDivisionAccounts collection:", error);
+    }
+
+    console.error("User not found in any collection");
+    return false;
   };
 
   const logout = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-      router.push("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
+    setUser(null);
+    localStorage.removeItem("user");
   };
-
-  // Don't render children until authentication is initialized
-  if (!isInitialized) {
-    return null; // Or a loading spinner
-  }
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
@@ -105,7 +150,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error("useAuth must be used within an AuthProvider");

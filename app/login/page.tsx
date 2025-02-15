@@ -8,9 +8,6 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore"; // Ensure this line is present
 import { db } from "@/lib/firebase"; // En
-
-
-
 export default function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +26,7 @@ export default function LoginPage() {
     const userDoc = querySnapshot.docs[0];
     // Check if the user is created by McashDivision
     const isCreatedByMcashDivision = userDoc.data().createdBy === 'McashDivision';
-    return isCreatedByMcashDivision ? 'regionalmanager' : userDoc.data().role;
+    return isCreatedByMcashDivision ? 'RegionalManager' : userDoc.data().role;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,9 +38,9 @@ export default function LoginPage() {
       if (isLoggedIn) {
         // Determine user role and redirect accordingly
         const userRole = await getUserRole(emailOrUsername);
-        if (userRole === 'mcashdivision') {
+        if (userRole === 'McashDivision') {
           router.push("/mcash-division-dashboard");
-        } else if (userRole === 'spbddivision') {
+        } else if (userRole === 'SpbdDivision') {
           router.push("/spbd-division-dashboard");
         } else {
           router.push("/dashboard");
