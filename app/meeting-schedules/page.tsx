@@ -12,7 +12,7 @@ import { useAuth } from "@/app/contexts/AuthContext"
 import { db } from "@/lib/firebase"
 import { collection, query, onSnapshot, doc, updateDoc, deleteDoc, addDoc } from "firebase/firestore"
 
-export function MeetingSchedules() {
+function MeetingSchedules() {
   const router = useRouter()
   const { user } = useAuth()
   const [meetings, setMeetings] = useState<Meeting[]>([])
