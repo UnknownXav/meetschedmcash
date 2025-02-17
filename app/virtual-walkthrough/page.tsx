@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/contexts/AuthContext"
 
-export function VideoWalkthrough() {
+function VideoWalkthrough() {
   const router = useRouter()
   const { user } = useAuth()
   const [videoUrl, setVideoUrl] = useState("https://example.com/ml-payroll-pro-walkthrough.mp4")

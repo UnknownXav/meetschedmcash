@@ -30,7 +30,7 @@ const STATUS_DESCRIPTIONS = {
   FullyCompliant: "These clients have met all the necessary requirements for accreditation. They are fully committed to using the system, and their account will be managed by the MCash support team for ongoing assistance and optimization."
 }
 
-export function ReferralStatus() {
+function ReferralStatus() {
   const router = useRouter()
   const { user } = useAuth()
   const [referrals, setReferrals] = useState<Referral[]>([])
@@ -218,4 +218,4 @@ export function ReferralStatus() {
   )
 }
 
-export default ReferralStatus
+export default ReferralStatus;

@@ -24,7 +24,7 @@ interface ClientAccount {
   createdBy: string;
 }
 
-export default function ViewClientAccounts() {
+function ViewClientAccounts() {
   const { user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -314,3 +314,4 @@ export default function ViewClientAccounts() {
     </div>
   );
 }
+export default ViewClientAccounts;

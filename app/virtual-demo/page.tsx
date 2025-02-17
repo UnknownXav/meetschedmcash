@@ -13,7 +13,7 @@ import type { Meeting } from "@/app/types/user"
 import { db } from "@/lib/firebase"
 import { collection, addDoc } from "firebase/firestore"
 
-export function ScheduleDemo() {
+function ScheduleDemo() {
   const router = useRouter()
   const { user } = useAuth()
   const [formData, setFormData] = useState({

@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../contexts/AuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore"; // Ensure this line is present
 import { db } from "@/lib/firebase"; // En
-export default function LoginPage() {
+
+function LoginPage() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -113,3 +114,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginPage;

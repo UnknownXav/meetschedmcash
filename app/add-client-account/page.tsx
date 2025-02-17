@@ -37,7 +37,7 @@ export interface ClientAccount {
   createdBy: string;
 }
 
-export default function AddClientAccount() {
+function AddClientAccount() {
   const { user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -212,3 +212,5 @@ export default function AddClientAccount() {
     </div>
   );
 }
+
+export default AddClientAccount;

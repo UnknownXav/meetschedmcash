@@ -8,7 +8,7 @@ import { SpbdDivisionDashboard } from "../components/SpbdDivisionDashboard";
 import { RegionalManagerDashboard } from "../components/RegionalManagerDashboard";
 import { NotificationBell } from "../components/NotificationBell";
 
-export default function Dashboard() {
+function Dashboard() {
   const { user, logout } = useAuth();
   const router = useRouter();
 
@@ -57,3 +57,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
+export default Dashboard;
