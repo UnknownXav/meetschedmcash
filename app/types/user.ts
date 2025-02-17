@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+
 import { Timestamp } from "firebase/firestore";
 
 export type UserRole = "McashDivision" | "SpbdDivision" | "RegionalManager";

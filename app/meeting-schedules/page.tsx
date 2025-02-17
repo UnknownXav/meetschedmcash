@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, JSX } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -19,28 +19,22 @@ export function MeetingSchedules() {
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null)
 
   useEffect(() => {
-    // Set up real-time listener for meetings collection
     const q = query(collection(db, "meetings"))
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const meetingsData: Meeting[] = []
       querySnapshot.forEach((doc) => {
-        // Use the Firestore document ID
         meetingsData.push({ ...doc.data(), id: doc.id } as Meeting)
       })
       setMeetings(meetingsData)
     })
-
-    // Cleanup subscription on unmount
     return () => unsubscribe()
   }, [])
 
   const handleStatusChange = async (meetingId: string, newStatus: string) => {
     try {
       const meetingRef = doc(db, "meetings", meetingId)
-      // Update meeting status and, if confirmed, add confirmedBy field
       await updateDoc(meetingRef, { status: newStatus, confirmedBy: newStatus === "Confirmed" ? user?.role : null })
 
-      // If the meeting is confirmed, add a notification for the regional manager.
       if (newStatus === "Confirmed") {
         let notificationMessage = ""
         if (user?.role === "McashDivision") {
@@ -58,7 +52,6 @@ export function MeetingSchedules() {
         }
       }
 
-      // Clear meetings data after forwarding to referral status if needed
       if (newStatus === 'referral') {
         setMeetings([])
       }
@@ -74,17 +67,11 @@ export function MeetingSchedules() {
   }
 
   const handleDelete = async (meetingId: string) => {
-    if (!meetingId) {
-      console.error("No meeting ID provided")
-      return
-    }
-
     if (window.confirm("Are you sure you want to delete this meeting? This action cannot be undone.")) {
       try {
-        console.log("Deleting meeting with ID:", meetingId)
         const meetingRef = doc(db, "meetings", meetingId)
         await deleteDoc(meetingRef)
-        setSelectedMeeting(null) // Close the dialog
+        setSelectedMeeting(null)
       } catch (error) {
         console.error("Error deleting meeting: ", error)
         alert("Failed to delete meeting. Please try again.")
@@ -97,7 +84,7 @@ export function MeetingSchedules() {
       const forwardedRef = collection(db, "forwardedCompanies")
       await addDoc(forwardedRef, { companyName, timestamp: new Date() })
       alert(`${companyName} has been forwarded to Track Referral Status.`)
-      setMeetings([]) // Clear meetings state after transferring data from referral status
+      setMeetings([])
     } catch (error) {
       console.error("Error forwarding company: ", error)
       alert("Failed to forward company. Please try again.")
@@ -113,7 +100,7 @@ export function MeetingSchedules() {
       case "software":
         return "No system, but only a disbursement channel is needed for salary payments"
       default:
-        return status // For "others" or custom status
+        return status
     }
   }
 
@@ -132,7 +119,6 @@ export function MeetingSchedules() {
               </p>
             </div>
           ) : (
-            // Wrap the table in a scrollable container
             <div className="overflow-auto max-h-[60vh]">
               <Table>
                 <TableHeader>
@@ -149,25 +135,13 @@ export function MeetingSchedules() {
                 </TableHeader>
                 <TableBody>
                   {meetings.map((meeting) => (
-                    <TableRow
-                      key={meeting.id}
-                      className="cursor-pointer hover:bg-gray-100"
-                      onClick={() => setSelectedMeeting(meeting)}
-                    >
+                    <TableRow key={meeting.id} className="cursor-pointer hover:bg-gray-100">
                       <TableCell>{meeting.companyName}</TableCell>
                       <TableCell>
-                        <p>
-                          <strong>Contact:</strong> {meeting.contactPerson}
-                        </p>
-                        <p>
-                          <strong>Number:</strong> {meeting.contactNumber}
-                        </p>
-                        <p>
-                          <strong>Client Emails:</strong> {meeting.clientEmails}
-                        </p>
-                        <p>
-                          <strong>RM/AM Emails:</strong> {meeting.rmEmails}
-                        </p>
+                        <p><strong>Contact:</strong> {meeting.contactPerson}</p>
+                        <p><strong>Number:</strong> {meeting.contactNumber}</p>
+                        <p><strong>Client Emails:</strong> {meeting.clientEmails}</p>
+                        <p><strong>RM/AM Emails:</strong> {meeting.rmEmails}</p>
                       </TableCell>
                       <TableCell>{meeting.meetingDate}</TableCell>
                       <TableCell>{meeting.meetingTime}</TableCell>
@@ -204,43 +178,28 @@ export function MeetingSchedules() {
                         )}
                         {user?.role === "RegionalManager" && meeting.status}
                       </TableCell>
-                      <TableCell
-                        className="max-w-[200px] truncate"
-                        title={getPayrollStatusDisplay(meeting.payrollStatus)}
-                      >
+                      <TableCell className="max-w-[200px] truncate" title={getPayrollStatusDisplay(meeting.payrollStatus)}>
                         {getPayrollStatusDisplay(meeting.payrollStatus)}
                       </TableCell>
                       <TableCell>{meeting.dateSubmitted}</TableCell>
                       <TableCell>
                         <div className="flex space-x-2">
                           {user?.role === "SpbdDivision" && (
-                            <Button
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                handleReschedule(meeting.id)
-                              }}
-                              size="sm"
-                            >
+                            <Button onClick={(e) => { e.stopPropagation(); handleReschedule(meeting.id); }} size="sm">
                               Reschedule
                             </Button>
                           )}
                           {user?.role === "McashDivision" && (
                             <>
                               <Button
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  handleDelete(meeting.id)
-                                }}
+                                onClick={(e) => { e.stopPropagation(); handleDelete(meeting.id); }}
                                 variant="destructive"
                                 size="sm"
                               >
                                 Delete
                               </Button>
                               <Button
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  handleForward(meeting.companyName)
-                                }}
+                                onClick={(e) => { e.stopPropagation(); handleForward(meeting.companyName); }}
                                 variant="outline"
                                 size="sm"
                               >
@@ -266,73 +225,14 @@ export function MeetingSchedules() {
             </DialogHeader>
             <Card>
               <CardHeader>
-                <CardTitle>{selectedMeeting.companyName}</CardTitle>
+                <CardTitle>Meeting with {selectedMeeting.companyName}</CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="font-semibold">Contact Person:</p>
-                  <p>{selectedMeeting.contactPerson}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Contact Number:</p>
-                  <p>{selectedMeeting.contactNumber}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Meeting Date:</p>
-                  <p>{selectedMeeting.meetingDate}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Meeting Time:</p>
-                  <p>{selectedMeeting.meetingTime}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Status:</p>
-                  <p>{selectedMeeting.status}</p>
-                </div>
-                <div>
-                  <p className="font-semibold">Date Submitted:</p>
-                  <p>{selectedMeeting.dateSubmitted}</p>
-                </div>
-                <div className="col-span-2">
-                  <p className="font-semibold">Payroll Status:</p>
-                  <p>{getPayrollStatusDisplay(selectedMeeting.payrollStatus)}</p>
-                </div>
-                <div className="col-span-2">
-                  <p className="font-semibold">Client Emails:</p>
-                  <p>{selectedMeeting.clientEmails}</p>
-                </div>
-                <div className="col-span-2">
-                  <p className="font-semibold">RM/AM Emails:</p>
-                  <p>{selectedMeeting.rmEmails}</p>
-                </div>
-                <div className="col-span-2">
-                  <div className="flex space-x-2">
-                    {user?.role === "McashDivision" && (
-                      <>
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDelete(selectedMeeting.id)
-                          }}
-                          variant="destructive"
-                          size="sm"
-                        >
-                          Delete
-                        </Button>
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleForward(selectedMeeting.companyName)
-                          }}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Forward
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </div>
+              <CardContent>
+                <p><strong>Contact Person:</strong> {selectedMeeting.contactPerson}</p>
+                <p><strong>Contact Number:</strong> {selectedMeeting.contactNumber}</p>
+                <p><strong>Meeting Date:</strong> {selectedMeeting.meetingDate}</p>
+                <p><strong>Meeting Time:</strong> {selectedMeeting.meetingTime}</p>
+                <p><strong>Status:</strong> {selectedMeeting.status}</p>
               </CardContent>
             </Card>
           </DialogContent>
@@ -342,4 +242,8 @@ export function MeetingSchedules() {
   )
 }
 
-export default MeetingSchedules
+
+
+export default MeetingSchedules;
+
+
