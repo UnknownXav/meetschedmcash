@@ -95,9 +95,9 @@ function ScheduleDemo() {
     { time: '08:00-09:30', label: '8:00 AM - 9:30 AM' },
     { time: '09:00-10:30', label: '9:00 AM - 10:30 AM' },
     { time: '10:30-12:00', label: '10:30 AM - 12:00 PM' },
-    { time: '13:00-14:30', label: '1:00 PM - 2:30 PM' },
-    { time: '14:30-15:30', label: '2:30 PM - 3:30 PM' },
-    { time: '15:30-16:00', label: '3:30 PM - 4:00 PM' },
+    { time: '13:00-14:30', label: '13:00 PM - 14:30 PM' },
+    { time: '14:30-16:00', label: '14:30 PM - 16:00 PM' },
+    { time: '16:30-17:00', label: '16:00 PM - 17:30 PM' },
   ];
 
   return (

@@ -1,38 +1,91 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Common function to check if user is authenticated
+    // Common functions
     function isAuthenticated() {
       return request.auth != null;
     }
-
-    // Rules for users collection
+    
+    function hasRole(role) {
+      return isAuthenticated() && request.auth.token.role == role;
+    }
+    
+    // Rules for the "users" collection
     match /users/{userId} {
-      allow read: if isAuthenticated(); // Allow authenticated users to read their own user data
-      allow write: if request.auth.uid == userId; // Allow users to write to their own document
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId;
     }
-
-    // Rules for clients collection
+    
+    // Rules for the "mcashDivisionAccounts" collection
+    match /mcashDivisionAccounts/{accountId} {
+      allow read: if true; // Allow public read for login verification
+      allow write: if isAuthenticated() && hasRole('admin');
+    }
+    
+    // Rules for the "spbdDivisionAccounts" collection
+    match /spbdDivisionAccounts/{accountId} {
+      allow read: if true; // Allow public read for login verification
+      allow write: if isAuthenticated() && hasRole('admin');
+    }
+    
+    // Rules for the "clients" collection
     match /clients/{clientId} {
-      allow read, write: if isAuthenticated();
+      allow read: if isAuthenticated();
+      
+      allow create: if isAuthenticated() 
+        && (
+          request.resource.data.createdBy == request.auth.uid 
+          || (hasRole('McashDivision') && request.resource.data.createdBy == 'McashDivision')
+        );
+      
+      allow update, delete: if isAuthenticated() 
+        && (
+          resource.data.createdBy == request.auth.uid 
+          || (hasRole('McashDivision') && resource.data.createdBy == 'McashDivision')
+        );
     }
-
-    // Rules for meetings collection
+    
+    // Rules for the "meetings" collection
     match /meetings/{meetingId} {
       allow read: if isAuthenticated();
-      allow create: if isAuthenticated();
-      allow update: if isAuthenticated() 
-        && request.resource.data.keys().hasAll(['status', 'meetingDate', 'meetingTime'])
-        && request.resource.data.diff(resource.data).affectedKeys()
-            .hasAny(['status', 'meetingDate', 'meetingTime']);
+      
+      allow create: if isAuthenticated()
+        && request.resource.data.keys().hasAll([
+          'companyName', 'contactPerson', 'contactNumber',
+          'meetingDate', 'meetingTime', 'status',
+          'clientEmails', 'rmEmails'
+        ])
+        && request.resource.data.status == 'Pending';
+      
+      allow update: if isAuthenticated()
+        && request.resource.data.diff(resource.data)
+          .affectedKeys()
+          .hasAny(['status', 'meetingDate', 'meetingTime']);
+      
       allow delete: if isAuthenticated();
     }
-
-    // Rules for forwarded companies collection
+    
+    // Rules for the "forwardedCompanies" collection
     match /forwardedCompanies/{companyId} {
       allow read: if isAuthenticated();
-      allow create: if isAuthenticated() 
+      
+      allow create: if isAuthenticated()
         && request.resource.data.keys().hasAll(['companyName', 'timestamp']);
+      
+      allow delete: if isAuthenticated();
+    }
+    
+    // Rules for the "notifications" collection
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated();
+      
+      allow create: if isAuthenticated()
+        && request.resource.data.keys().hasAll([
+          'message',
+          'meetingId',
+          'timestamp'
+        ]);
+      
       allow delete: if isAuthenticated();
     }
   }

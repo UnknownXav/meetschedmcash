@@ -148,7 +148,7 @@ function ReferralStatus() {
                     <TableHead>Status</TableHead>
                     <TableHead>Date Onboarded</TableHead>
                     <TableHead>Date Started</TableHead>
-                    <TableHead>Actions</TableHead>
+
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -191,15 +191,6 @@ function ReferralStatus() {
                       </TableCell>
                       <TableCell>{referral.dateOnboarded ? new Date(referral.dateOnboarded).toLocaleDateString() : "-"}</TableCell>
                       <TableCell>{referral.dateStarted ? new Date(referral.dateStarted).toLocaleDateString() : "-"}</TableCell>
-                      <TableCell>
-                        <Button
-                          onClick={() => alert(`Managing ${referral.companyName}`)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Manage
-                        </Button>
-                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
