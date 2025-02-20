@@ -11,3 +11,5 @@ export type ClientBaseType = {
 
 
 export type SaveClientType = Omit<ClientBaseType,'id'>;
+
+export type GetClientResponse = ClientBaseType;
