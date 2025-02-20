@@ -1,3 +1,6 @@
 export enum FirebaseTable {
-    CLIENT='client'
+    CLIENT='client',
+    MEETING='meeting',
+
+    
 }

@@ -37,7 +37,7 @@ export interface Meeting {
   meetingTime: string
   meetingTimeOption2?: string
   status: "Pending" | "Confirmed" | "Endorsed" | "Rescheduled"
-  payrollStatus: "No system; payroll is computed manually and paid in cash" | "Payroll system in place, but a disbursement channel is needed for cash payroll" | "No system, but only a disbursement channel is needed for salary payments" | "others"
+  payrollStatus: "No system, payroll is computed manually and paid in cash" | "Payroll system in place, but a disbursement channel is needed for cash payroll" | "No system, but only a disbursement channel is needed for salary payments" | "others"
   dateSubmitted: string
   clientEmails: string
   rmEmails: string
