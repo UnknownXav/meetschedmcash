@@ -1,7 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 
 export type MeetingType = {
-  dateCreated: any;
   id: string;
   companyName: string;
   contactPerson: string;
@@ -13,8 +12,7 @@ export type MeetingType = {
   dateSubmitted: string;
   clientEmails: string;
   rmEmails: string;
-  updatedAt: Timestamp;
-  createdBy: string;
+
 }
 
 

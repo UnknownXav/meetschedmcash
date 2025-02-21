@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input"
 import { InfoCircledIcon } from "@radix-ui/react-icons"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { X } from "lucide-react"
-import type { Referral } from "@/app/types/user"
-import { useAuth } from "@/app/contexts/AuthContext"
 import { db } from "@/lib/firebase"
 import { collection, query, onSnapshot } from "firebase/firestore"
 

@@ -1,61 +1,57 @@
-"use client";
+import Link from "next/link";
+import { Video, Calendar, UserPlus, List, UserCheck, PlayCircle } from "lucide-react";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../contexts/AuthContext";
-import { McashDivisionDashboard } from "../components/McashDivisionDashboard";
-import { SpbdDivisionDashboard } from "../components/SpbdDivisionDashboard";
-import { RegionalManagerDashboard } from "../components/RegionalManagerDashboard";
-import { NotificationBell } from "../components/NotificationBell";
-
-function Dashboard() {
-  const { user, logout } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    }
-  }, [user, router]);
-
-  if (!user) {
-    return null;
-  }
-
-  const handleLogout = () => {
-    logout();
-    router.push("/login");
-  };
-
+export default function Dashboard() {
   return (
-    // Outer container fills full viewport height and width.
-    <div className="h-screen w-screen bg-gray-100 flex flex-col justify-center sm:py-12">
-      {/* Remove width restrictions to let the content span full width */}
-      <div className="relative py-3 w-full px-4">
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="w-full">
-            {/* Header with welcome message and logout button */}
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-2xl font-semibold">Welcome, {user.role}</h1>
-              <div className="flex items-center space-x-4">
-                <NotificationBell />
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-            {/* Conditional dashboard content based on user role */}
-            {user.role === "McashDivision" && <McashDivisionDashboard />}
-            {user.role === "SpbdDivision" && <SpbdDivisionDashboard />}
-            {user.role === "RegionalManager" && <RegionalManagerDashboard />}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-red-600">WELCOME!</h1>
+        <p className="text-lg text-gray-600 mt-2">How can I support you today?</p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 max-w-5xl mx-auto">
+        <Link href="/ScheduleMeeting">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <Video className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">Schedule a Virtual Demo</span>
           </div>
-        </div>
+        </Link>
+
+        <Link href="/CheckMeeting">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <Calendar className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">Check Meeting Schedules</span>
+          </div>
+        </Link>
+
+        <Link href="/TrackReferral">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <UserCheck className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">Track Referral Status</span>
+          </div>
+        </Link>
+
+        <Link href="/PayrollWalkthrough">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <PlayCircle className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">ML Payroll PRO Walkthrough</span>
+          </div>
+        </Link>
+
+        <Link href="/AddClient">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <UserPlus className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">Add RM Account</span>
+          </div>
+        </Link>
+
+        <Link href="/ViewClient">
+          <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
+            <List className="text-red-600" size={50} />
+            <span className="mt-4 font-semibold text-gray-800">View RM Accounts</span>
+          </div>
+        </Link>
       </div>
     </div>
   );
 }
-
-export default Dashboard;
