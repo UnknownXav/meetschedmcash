@@ -1,21 +1,15 @@
-"use client"
+"use client"; // This is necessary to use client-side routing
 
-import { useAuth } from "./contexts/AuthContext"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { user } = useAuth()
-  const router = useRouter()
+  const router = useRouter();
 
+  // Automatically redirect to /dashboard when the component mounts
   useEffect(() => {
-    if (user) {
-      router.push("/dashboard")
-    } else {
-      router.push("/login")
-    }
-  }, [user, router])
+    router.push("/dashboard");
+  }, [router]);
 
-  return null // This page will always redirect, so we don't need to render anything
+
 }
-
