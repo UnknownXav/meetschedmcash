@@ -17,6 +17,7 @@ export interface User {
 }
 
 export interface ClientAccount {
+  region(region: any): unknown;
   id: string;
   username: string;
   password: string;
@@ -29,6 +30,25 @@ export interface ClientAccount {
 }
 
 export interface Meeting {
+  id: string
+  companyName: string
+  contactPerson: string
+  contactNumber: string
+  meetingDate: string
+  meetingTime: string
+  meetingTimeOption2?: string
+  status: "Pending" | "Confirmed" | "Endorsed" | "Rescheduled"
+  payrollStatus: "No system, payroll is computed manually and paid in cash" | "Payroll system in place, but a disbursement channel is needed for cash payroll" | "No system, but only a disbursement channel is needed for salary payments" | "others"
+  dateSubmitted: string
+  clientEmails: string
+  rmEmails: string
+  createdAt: Timestamp
+  updatedAt: Timestamp
+  createdBy: string
+  notes?: string
+}
+
+export interface meetingDetails {
   id: string
   companyName: string
   contactPerson: string

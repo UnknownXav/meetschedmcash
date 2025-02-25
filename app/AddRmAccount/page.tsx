@@ -3,8 +3,9 @@
 import { saveClient } from "@/lib/serviceclient/client.service";
 import { SaveClientType } from "@/lib/types/client.type";
 import { useState } from "react";
+import { Card } from "@/components/ui/card";
 
-export default function AddClient() {
+export default function AddRmAccount() {
 	const [username, setUsername] =
 		useState<string>("");
 	async function handleSubmit() {
@@ -39,9 +40,14 @@ export default function AddClient() {
 		}
 	}
 
+	function setPassword(_value: string): void {
+		throw new Error("Function not implemented.");
+	}
+
 	return (
+		<Card className="p-6 bg-white shadow-lg rounded-lg border border-gray-100">
 		<div className=" w-[50%] mx-auto">
-			<div className=" flex flex-row gap-3">
+			<div className="gap-4">
 				<input
 					className=" p-3 border border-grey-500 w-full rounded-md"
 					placeholder="Username"
@@ -49,7 +55,18 @@ export default function AddClient() {
 						setUsername(e.target.value)
 					}
 				/>
-				<button
+			</div><br></br>
+			<div className=" flex flex-row gap-3">
+				<input
+					className=" p-3 border border-grey-500 w-full rounded-md"
+					placeholder="Password"
+					onChange={(e) =>
+						setPassword(e.target.value)
+					}
+				/>
+			</div><br></br>
+			<div className="flex flex-1 justify-center">
+			<button
 					onClick={() => handleSubmit()}
 					className=" p-3 bg-red-500  text-white rounded-md"
 				>
@@ -57,5 +74,6 @@ export default function AddClient() {
 				</button>
 			</div>
 		</div>
+		</Card>
 	);
 }
