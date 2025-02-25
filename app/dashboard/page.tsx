@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Video, Calendar, UserPlus, List, UserCheck, PlayCircle } from "lucide-react";
+import { Video, Calendar, UserPlus, List, UserCheck, PlayCircle} from "lucide-react";
 
 export default function Dashboard() {
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="text-center">
@@ -38,7 +39,7 @@ export default function Dashboard() {
           </div>
         </Link>
 
-        <Link href="/AddClient">
+        <Link href="/AddRmAccount">
           <div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
             <UserPlus className="text-red-600" size={50} />
             <span className="mt-4 font-semibold text-gray-800">Add RM Account</span>

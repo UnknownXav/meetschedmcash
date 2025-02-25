@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore"
 
 export type MeetingType = {
+  toLowerCase(): unknown;
   id: string;
   companyName: string;
   contactPerson: string;

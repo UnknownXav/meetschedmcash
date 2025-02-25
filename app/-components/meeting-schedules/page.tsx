@@ -181,7 +181,7 @@ function MeetingSchedules() {
                       <TableCell className="max-w-[200px] truncate" title={getPayrollStatusDisplay(meeting.payrollStatus)}>
                         {getPayrollStatusDisplay(meeting.payrollStatus)}
                       </TableCell>
-                      <TableCell>{meeting.dateSubmitted}</TableCell>
+                      <TableCell></TableCell>
                       <TableCell>
                         <div className="flex space-x-2">
                           {user?.role === "SpbdDivision" && (
@@ -245,5 +245,3 @@ function MeetingSchedules() {
 
 
 export default MeetingSchedules;
-
-
