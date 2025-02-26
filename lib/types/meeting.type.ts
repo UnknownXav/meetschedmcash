@@ -1,4 +1,5 @@
-import { Timestamp } from "firebase/firestore"
+import { UnknownKeysParam } from "zod";
+
 
 export type MeetingType = {
   id: string;
@@ -12,10 +13,12 @@ export type MeetingType = {
   dateSubmitted: string;
   clientEmails: string;
   rmEmails: string;
+  toLowerCase(): unknown;
 
 }
 
 
 export type SaveMeetingType = Omit<MeetingType,'id'>;
-
 export type GetMeetingResponse = MeetingType;
+export type DeleteMeetingType = Pick<MeetingType,'id'>;
+export type ForwardMeetingType = Pick<MeetingType, 'companyName'>;

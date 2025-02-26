@@ -1,5 +1,5 @@
 import { axiosConfig } from "../config/axiosconfig";
-import { GetClientResponse, SaveClientType } from "../types/client.type";
+import { ClientBaseType, GetClientResponse, SaveClientType } from "../types/client.type";
 
 export const getAllClient = async():Promise<GetClientResponse[]>=>{
     const resp = await axiosConfig.get("client");
@@ -16,3 +16,28 @@ export const saveClient = async(payload:SaveClientType) => {
 
     return resp;
 }
+
+
+export const deleteClientAccount = async (id: string) => {
+    const resp = await fetch(`/api/client/${id}`, {
+      method: 'DELETE',
+    });
+  
+    if (!resp.ok) {
+      throw new Error('Failed to delete account');
+    }
+  };
+  // Example API call for updating an account
+export const updateClientAccount = async (id: string, data: Partial<ClientBaseType>) => {
+  try {
+    const response = await axiosConfig.put(`/api/client/${id}`, data);  // Axios handles HTTP PUT request
+    if (response.status === 200) {
+      return response.data;  // return the updated client data
+    }
+    throw new Error('Failed to update client');
+  } catch (error) {
+    console.error("Error updating client:", error);
+    throw error;
+  }
+};
+  

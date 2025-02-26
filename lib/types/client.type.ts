@@ -1,3 +1,5 @@
+
+
 export type ClientBaseType = {
     id: string;
     username: string;
@@ -13,3 +15,7 @@ export type ClientBaseType = {
 export type SaveClientType = Omit<ClientBaseType,'id'>;
 
 export type GetClientResponse = ClientBaseType;
+
+export type DeleteClientType = Pick<ClientBaseType,'id'>;
+
+export type UpdateClientType = Pick<ClientBaseType,'id'>;
