@@ -1,0 +1,15 @@
+export enum MeetingStatusEnum{
+    PENDING = "PENDING",
+    CONFIRM = "CONFIRM",
+    ENDORSE = "ENDORSE",
+    RESCHEDULE='RESCHEDULE'
+}
+
+export enum ReferalStatusEnum {
+    FOR_ENROLLMENT ='FOR_ENROLLMENT',
+    ONBOARDED = 'ONBOARDED',
+    ACTIVE='ACTIVE',
+    SYSTEM_USER='SYSTEM_USER',
+    FULLY_COMPLIANT='FULLY_COMPLIANT',
+    OTHERS='OTHERS'
+}

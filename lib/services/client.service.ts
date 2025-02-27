@@ -10,8 +10,9 @@ export const createClient = async(payload:SaveClientType) =>{
     return resp;
 }
 
-export const getClient = async()=>{
-    const snapshot = await getDocs(collection(db,FirebaseTable.CLIENT))
+const getClient = async(date:string | undefined)=>{
+  const snapshot = await getDocs(collection(db,FirebaseTable.CLIENT))
+
     const clients = snapshot.docs.map((doc: { id: any; data: () => any }) => ({
       id: doc.id,
       ...doc.data(),
