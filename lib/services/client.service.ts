@@ -1,22 +1,19 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
-import { SaveClientType } from "../types/client.type"
+import { axiosConfig } from "../config/axiosconfig"
+import { InsertClientDto } from "../dto/Client.dto"
+import { GetClientResponse } from "../types/client.type"
 
-import { FirebaseTable } from "./database.enum"
-import { db } from "../firebase"
+export const getAllClient = async (): Promise<GetClientResponse[]> => {
+  const resp = await axiosConfig.get("client")
 
-export const createClient = async(payload:SaveClientType) =>{
-    const resp = await addDoc(collection(db,FirebaseTable.CLIENT),payload)
-
-    return resp;
+  return resp.data
 }
 
-const getClient = async(date:string | undefined)=>{
-  const snapshot = await getDocs(collection(db,FirebaseTable.CLIENT))
+export const saveClient = async (payload: InsertClientDto) => {
+  const resp = await axiosConfig.post("client", payload, {
+    headers: {
+      "Content-Type": "text/plain",
+    },
+  })
 
-    const clients = snapshot.docs.map((doc: { id: any; data: () => any }) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return clients;
+  return resp
 }

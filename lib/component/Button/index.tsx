@@ -18,9 +18,9 @@ export default function Button(
 	} = props;
 
 	const buttonStyle =
-		buttonType === ButtonType.SOLID
-			? "p-3 bg-red-500 rounded-md text-white hover:bg-red-100 hover:text-red-500"
-			: "p-3 bg-white border-red-500 border text-red-500 rounded-md hover:bg-red-200 hover:border-none";
+    buttonType === ButtonType.SOLID
+      ? "p-2 px-4 bg-red-500 rounded-md h-[42px]  text-white hover:bg-red-100 hover:text-red-500"
+      : "p-2 px-4 bg-white border-red-500 border h-[42px] text-red-500 rounded-md hover:bg-red-200 hover:border-none"
 
 	return (
 		<button

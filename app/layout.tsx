@@ -27,17 +27,19 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html
-			lang="en"
-			className={poppins.variable}
-		>
-			<body
-				className={`font-poppins ${poppins.className}`}
-			>
-				{/* Render children components */}
-				<Toaster />
-				{children}
-			</body>
-		</html>
-	);
+    <html lang="en" className={poppins.variable}>
+      <body className={`font-poppins ${poppins.className}`}>
+        {/* Render children components */}
+        <Toaster
+          toastOptions={{
+            classNames: {
+              error: "bg-red-500 border-none",
+              success: "bg-green-500 border-none",
+            },
+          }}
+        />
+        {children}
+      </body>
+    </html>
+  )
 }
