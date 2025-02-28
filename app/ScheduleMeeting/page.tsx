@@ -2,7 +2,10 @@
 
 import { saveMeeting } from "@/lib/serviceclient/meeting.service";
 import { SaveMeetingType } from "@/lib/types/meeting.type";
-import router from "next/router";
+import { ArrowLeft } from "lucide-react";
+// Import the correct Button from your UI components, not react-day-picker
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function ScheduleMeeting() {
@@ -12,11 +15,18 @@ export default function ScheduleMeeting() {
   const [meetingDate, setMeetingDate] = useState<string>("");
   const [meetingTime, setMeetingTime] = useState<string>("");
   const [status, setStatus] = useState<"Pending" | "Confirmed" | "Endorsed" | "Rescheduled">("Pending");
-  const [payrollStatus, setPayrollStatus] = useState<"No system, payroll is computed manually and paid in cash" | "Payroll system in place, but a disbursement channel is needed for cash payroll" | "No system, but only a disbursement channel is needed for salary payments" | "others">("No system, payroll is computed manually and paid in cash");
-  const [otherPayrollStatus, setOtherPayrollStatus] = useState<string>(""); // State for custom status
+  const [payrollStatus, setPayrollStatus] = useState<
+    | "No system, payroll is computed manually and paid in cash"
+    | "Payroll system in place, but a disbursement channel is needed for cash payroll"
+    | "No system, but only a disbursement channel is needed for salary payments"
+    | "others"
+  >("No system, payroll is computed manually and paid in cash");
+  const [otherPayrollStatus, setOtherPayrollStatus] = useState<string>("");
   const [clientEmails, setClientEmails] = useState<string>("");
   const [rmEmails, setRmEmails] = useState<string>("");
-  const [isClicked, setIsClicked] = useState<boolean>(false); // State for click effect
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const router = useRouter();
 
   async function handleSubmit() {
     try {
@@ -25,6 +35,12 @@ export default function ScheduleMeeting() {
         return;
       }
 
+      const currentDate = new Date();
+      const day = String(currentDate.getDate()).padStart(2, '0');  // Ensures two digits (e.g., '02')
+      const month = String(currentDate.getMonth() + 1).padStart(2, '0');  // Month (0-11), +1 for 1-12, ensures two digits
+      const year = currentDate.getFullYear();  // Full year (e.g., 2025)
+
+      const formattedDate = `${day}-${month}-${year}`;
       const payload: SaveMeetingType = {
         companyName: companyName,
         contactPerson: contactPerson,
@@ -33,14 +49,17 @@ export default function ScheduleMeeting() {
         meetingTime: meetingTime,
         status: status,
         payrollStatus: payrollStatus,
-        dateSubmitted: new Date().toISOString(),
+        dateSubmitted: formattedDate,
         clientEmails: clientEmails,
         rmEmails: rmEmails,
+        toLowerCase: function (): unknown {
+          throw new Error("Function not implemented.");
+        }
       };
 
       const resp = await saveMeeting(payload);
 
-      if (resp.status == 200) {
+      if (resp.status === 200) {
         if (confirm("Successfully added")) {
           window.location.reload();
         }
@@ -50,11 +69,18 @@ export default function ScheduleMeeting() {
     }
   }
 
-
-
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex bg-white-200 justify-center mt-10">
+      
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+      <Button
+        variant="outline"
+        onClick={() => router.push("/dashboard")}
+        className="mb-4 flex items-center gap-2"
+      >
+        <ArrowLeft size={16} />
+        Back
+      </Button>
         <h2 className="text-2xl font-bold mb-6 text-center">Schedule a Virtual Demo</h2>
         <div className="flex flex-col gap-4">
           <input
@@ -65,13 +91,15 @@ export default function ScheduleMeeting() {
           <select
             className="p-3 border border-gray-300 w-full rounded-md hover:bg-red-300"
             value={payrollStatus}
-            onChange={(e) => setPayrollStatus(
-              e.target.value as
-                | "No system, payroll is computed manually and paid in cash"
-                | "Payroll system in place, but a disbursement channel is needed for cash payroll"
-                | "No system, but only a disbursement channel is needed for salary payments"
-                | "others"
-            )}
+            onChange={(e) =>
+              setPayrollStatus(
+                e.target.value as
+                  | "No system, payroll is computed manually and paid in cash"
+                  | "Payroll system in place, but a disbursement channel is needed for cash payroll"
+                  | "No system, but only a disbursement channel is needed for salary payments"
+                  | "others"
+              )
+            }
           >
             <option value="No system, payroll is computed manually and paid in cash">
               No system, payroll is computed manually and paid in cash
@@ -140,11 +168,12 @@ export default function ScheduleMeeting() {
           </p>
           <button
             onClick={() => {
-              setIsClicked(true); // Set clicked state to true
+              setIsClicked(true);
               handleSubmit();
             }}
-            className={`p-3 rounded-md text-white transition-all 
-              ${isClicked ? "bg-red-600" : "bg-red-500 hover:bg-red-100"}`}
+            className={`p-3 rounded-md text-white transition-all ${
+              isClicked ? "bg-red-600" : "bg-red-500 hover:bg-red-100"
+            }`}
           >
             Submit
           </button>

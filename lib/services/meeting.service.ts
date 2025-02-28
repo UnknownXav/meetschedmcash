@@ -1,5 +1,5 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
-import { SaveMeetingType } from "../types/meeting.type"
+import { addDoc, collection, getDocs, doc, deleteDoc } from "firebase/firestore"
+import { SaveMeetingType, DeleteMeetingType, MeetingType } from "../types/meeting.type"
 
 import { FirebaseTable } from "./database.enum"
 import { db } from "../firebase"
@@ -10,7 +10,7 @@ export const createMeeting = async(payload:SaveMeetingType) =>{
     return resp;
 }
 
-export const getMeeting = async()=>{
+export const getMeeting = async(p0?: never[])=>{
     const snapshot = await getDocs(collection(db,FirebaseTable.MEETING))
     const meeting = snapshot.docs.map((doc: { id: any; data: () => any }) => ({
       id: doc.id,
@@ -19,3 +19,26 @@ export const getMeeting = async()=>{
 
     return meeting;
 }
+
+export const deleteMeeting = async (id: string) => {
+  try {
+    await deleteDoc(doc(db, FirebaseTable.MEETING, id));
+    return `Meeting with id ${id} has been deleted successfully`;
+  } catch (error) {
+    console.error("Error deleting client:", error);
+    throw new Error('Failed to delete meeting');
+  }
+};
+
+export const handleForward = async (companyName: string) => {
+  try {
+    const forwardedRef = collection(db, "forwardedCompanies")
+    await addDoc(forwardedRef, { companyName, timestamp: new Date() })
+    alert(`${companyName} has been forwarded to Track Referral Status.`)
+    getMeeting([])
+  } catch (error) {
+    console.error("Error forwarding company: ", error)
+    alert("Failed to forward company. Please try again.")
+  }
+}
+
