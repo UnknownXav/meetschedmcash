@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Sheet,
   SheetContent,
@@ -95,6 +97,7 @@ export default function ViewModal(props: Props) {
       )
     }
   }
+
   return (
     <Sheet>
       <SheetTrigger asChild>{props.children}</SheetTrigger>
@@ -155,7 +158,7 @@ export default function ViewModal(props: Props) {
             <p className=" bg-gray-50 px-3 py-1">{data?.meetingBy}</p>
           </div>
         </div>
-        {data.meetingStatus === MeetingStatusEnum.RESCHEDULE && (
+        {data?.meetingStatus === MeetingStatusEnum.RESCHEDULE && (
           <div className=" mt-3">
             <p className=" text-[10px] text-grey">
               Reason of request reschedule
@@ -167,7 +170,6 @@ export default function ViewModal(props: Props) {
         <SheetFooter className=" mt-10">
           {displayEndorseButton()}
           {displayButtonToReschedule()}
-
           {displayConfirmButton()}
         </SheetFooter>
         <SheetFooter className=" w-full mt-3">

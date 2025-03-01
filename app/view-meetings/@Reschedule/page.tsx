@@ -1,5 +1,6 @@
 "use client"
 
+
 import {
   Dialog,
   DialogContent,
@@ -7,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/data/components/ui/dialog"
+} from "@/components/ui/dialog"
 import Button from "@/lib/component/Button"
 import Input from "@/lib/component/Input"
 import Select from "@/lib/component/Select"

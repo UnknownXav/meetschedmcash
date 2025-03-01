@@ -14,12 +14,14 @@ import { MeetingStatusEnum } from "@/lib/types/MeetingStatus.enum"
 import { Eye, PencilLine } from "lucide-react"
 import ViewModal from "./@ViewModal/page"
 import { UserType } from "@/lib/dto/User.dto"
+
 export default async function ViewMeetings() {
   const meeting = (await getClientMeetings()) as Array<ClientDto>
 
   return (
-    <div className="w-full">
+    <div className="w-full flex-row   ">
       <h1 className="text-2xl font-bold text-center my-6">Meeting Schedule</h1>
+
       <Table className=" max-w-[70%] m-auto">
         <TableHeader>
           <TableRow>
@@ -61,7 +63,7 @@ export default async function ViewMeetings() {
 
                 <TableCell className=" text-blue-500 cursor-pointer">
                   <div className=" flex flex-row gap-3 justify-end">
-                    <ViewModal data={val} id={"1212"} userType={UserType.MCASH}>
+                    <ViewModal data={val} id={"1212"} userType={UserType.RMS}>
                       <button className=" rounded-full p-2 bg-red-200">
                         <Eye size={12} color="black" />
                       </button>
