@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/data/components/ui/table"
 
 import { ClientDto } from "@/lib/dto/Client.dto"
 import { displayMeetingByStatus } from "@/lib/utils/meeting.utils"
@@ -45,7 +45,7 @@ export default async function ViewMeetings() {
             }
 
             return (
-              <TableRow>
+              <TableRow key={val.id}>
                 <TableCell className="font-medium">
                   {val.company.name}
                 </TableCell>
@@ -61,7 +61,7 @@ export default async function ViewMeetings() {
 
                 <TableCell className=" text-blue-500 cursor-pointer">
                   <div className=" flex flex-row gap-3 justify-end">
-                    <ViewModal data={val} id={"1212"} userType={UserType.ADMIN}>
+                    <ViewModal data={val} id={"1212"} userType={UserType.MCASH}>
                       <button className=" rounded-full p-2 bg-red-200">
                         <Eye size={12} color="black" />
                       </button>

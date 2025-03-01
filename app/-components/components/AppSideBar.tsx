@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/data/components/ui/sidebar"
 
 const mainMenuItems = [
   { title: "Dashboard", icon: Home, url: "/" },

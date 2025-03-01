@@ -7,3 +7,10 @@ export async function GET() {
     return NextResponse.json(resp, { status: 200 })
   } catch (error) {}
 }
+
+export async function UPDATE() {
+  try {
+    const resp = await getAllForMeetingClient()
+    return NextResponse.json(resp, { status: 200 })
+  } catch (error) {}
+}

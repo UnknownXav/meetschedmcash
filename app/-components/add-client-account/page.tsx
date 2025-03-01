@@ -1,10 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@/data/components/ui/card"
+import { Input } from "@/data/components/ui/input"
+import { Label } from "@/data/components/ui/label"
+import { Button } from "@/data/components/ui/button"
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -12,7 +17,7 @@ import { db } from "@/lib/firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { hash } from 'bcryptjs';
 import { z } from "zod";
-import { X } from "@/components/icons";
+import { X } from "@/data/components/icons"
 
 // Validation schema
 const clientAccountSchema = z.object({    

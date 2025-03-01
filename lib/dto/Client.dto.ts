@@ -38,3 +38,9 @@ export type ClientDto = {
 }
 
 export type InsertClientDto = Omit<ClientDto, "id">
+
+export type RescheduleMeetingDto = Pick<MeetingDetailsDto, "date" | "time"> & {
+  updatedBy: UserType
+}
+
+export type RequestToReschedulePayload = Pick<ClientDto, "remarks"> 
