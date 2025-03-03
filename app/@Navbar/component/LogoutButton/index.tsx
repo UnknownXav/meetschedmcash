@@ -8,59 +8,47 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { changeReferalStatus } from "@/data/Meeting.data";
+} from "@/data/components/ui/alert-dialog";
 import Button from "@/lib/component/Button";
-import { ChangeReferalStatusDto } from "@/lib/dto/Client.dto";
-import { ReferalStatusEnum } from "@/lib/types/MeetingStatus.enum";
+import { axiosConfig } from "@/lib/config/axiosconfig";
+import { LogOut } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
 
-type Props = {
-	children: React.ReactNode;
-	status: string;
-	id: string;
-};
-
-export default function Alert(
-	props: Props
-) {
-	const { id, status } = props;
-	async function handleSubmit() {
+export default function LogoutButton() {
+	const [isLoading, setIsLoading] =
+		useState<boolean>(false);
+	async function handleLogout() {
 		try {
-			const payload: ChangeReferalStatusDto =
-				{
-					referalStatus:
-						status as ReferalStatusEnum,
-				};
+			setIsLoading(true);
 			const resp =
-				await changeReferalStatus(
-					id,
-					payload
+				await axiosConfig.post(
+					"logout"
 				);
-
 			if (resp) {
-				toast.success(
-					"Successfully Upated"
-				);
-				window.location.reload();
+				window.location.href = "/";
 			}
 		} catch (error) {
-			console.log(error);
+			toast.error(
+				"Something went wrong"
+			);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
-				{props.children}
+				<LogOut size={20} />
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
 					<AlertDialogTitle>
-						Change status
+						Logout
 					</AlertDialogTitle>
 					<AlertDialogDescription>
-						do you want change the
-						status to {status}?
+						Are you sure do you want to
+						logout?
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
@@ -69,10 +57,12 @@ export default function Alert(
 					</AlertDialogCancel>
 					<Button
 						onClick={() =>
-							handleSubmit()
+							handleLogout()
 						}
 					>
-						Continue
+						{isLoading
+							? "Loading..."
+							: "Logout"}
 					</Button>
 				</AlertDialogFooter>
 			</AlertDialogContent>

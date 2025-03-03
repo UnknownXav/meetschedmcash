@@ -5,7 +5,13 @@ export enum UserType {
   RMS = "RMS",
 }
 
-type UserDto = {
+export enum UserLocation {
+  MAIN="MAIN",
+  LNCR='LNCR',
+  VISMIN='VISMIN'
+}
+
+export type UserDto = {
   id: string
   firstname: string
   middlename: string
@@ -15,6 +21,14 @@ type UserDto = {
   password: string
   createdBy: string
   createdDate: string
+  userLocation:string;
+  userType:UserType
 }
 
 export type CreateUserDto = Omit<UserDto, "createdDate" | "id">
+
+export type InsertUserDto = Omit<UserDto,"id">
+
+export type LoginDto = Pick<UserDto,'username'|'password'>
+
+export type LoginResponse = Omit<UserDto,"password">

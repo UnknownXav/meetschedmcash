@@ -1,4 +1,6 @@
 import {
+  ChangeMeetingStatus,
+  ChangeReferalStatusDto,
   ClientDto,
   RequestToReschedulePayload,
   RescheduleMeetingDto,
@@ -75,4 +77,42 @@ export const requestToRescheduleService = async (
   await createNotification(notifPayload)
 
   return collection
+}
+
+export async function updateMeetingStatus(id:string,payload:ChangeMeetingStatus){
+  const ref = doc(db, FirebaseCollectionEnum.client, id)
+  const collection = await getDoc(ref)
+  const collectionData = {
+    id: collection.id,
+    ...collection.data(),
+  } as ClientDto
+  let updateData:Partial<ChangeMeetingStatus> = { 
+    meetingStatus: payload.meetingStatus,
+  }
+  
+  if(payload.meetingStatus === MeetingStatusEnum.ENDORSE){
+    updateData.meetingBy=UserType.SPBD
+  }
+  await updateDoc(ref, updateData)
+
+  return collectionData;
+  
+}
+
+
+export async function changeReferalStatus(id:string,payload:ChangeReferalStatusDto){
+  const ref = doc(db, FirebaseCollectionEnum.client, id)
+  const collection = await getDoc(ref)
+  const collectionData = {
+    id: collection.id,
+    ...collection.data(),
+  } as ClientDto
+
+  await updateDoc(ref, {
+    referalStatus:payload.referalStatus,
+    meetingStatus:MeetingStatusEnum.DONE
+  })
+
+  return collectionData;
+ 
 }

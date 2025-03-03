@@ -1,5 +1,5 @@
 import { MeetingStatusEnum, ReferalStatusEnum } from "../types/MeetingStatus.enum";
-import { UserType } from "./User.dto"
+import { UserType } from "./User.dto";
 
 export type CompanyDetailsDto = {
   name: string
@@ -44,3 +44,9 @@ export type RescheduleMeetingDto = Pick<MeetingDetailsDto, "date" | "time"> & {
 }
 
 export type RequestToReschedulePayload = Pick<ClientDto, "remarks"> 
+
+export type ChangeMeetingStatus = Pick<ClientDto,'meetingStatus'> & {
+  meetingBy?:UserType
+}
+
+export type ChangeReferalStatusDto = Pick<ClientDto,"referalStatus">

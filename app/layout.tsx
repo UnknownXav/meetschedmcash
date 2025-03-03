@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import { Toaster } from "@/data/components/ui/sonner"
-
+import { Toaster } from "@/data/components/ui/sonner";
 // Set up Poppins font
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -27,19 +26,27 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-    <html lang="en" className={poppins.variable}>
-      <body className={`font-poppins ${poppins.className}`}>
-        {/* Render children components */}
-        <Toaster
-          toastOptions={{
-            classNames: {
-              error: "bg-red-500 border-none",
-              success: "bg-green-500 border-none",
-            },
-          }}
-        />
-        {children}
-      </body>
-    </html>
-  )
+		<html
+			lang="en"
+			className={poppins.variable}
+		>
+			<body
+				className={`font-poppins ${poppins.className} h-screen`}
+			>
+				{/* Render children components */}
+
+				<Toaster
+					toastOptions={{
+						classNames: {
+							error:
+								"bg-red-500 border-none",
+							success:
+								"bg-green-500 border-none",
+						},
+					}}
+				/>
+				{children}
+			</body>
+		</html>
+	);
 }

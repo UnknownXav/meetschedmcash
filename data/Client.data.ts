@@ -1,4 +1,5 @@
 import { ClientDto, InsertClientDto } from "@/lib/dto/Client.dto"
+import { UserType } from "@/lib/dto/User.dto"
 import { db } from "@/lib/firebase"
 import { FilterBy, FilterClientType } from "@/lib/types/FilterClientType.type"
 import { FirebaseCollectionEnum } from "@/lib/types/FirebaseCollection.enum"
@@ -126,15 +127,53 @@ export async function filterClientByMeetingStatus(
   }
 }
 
-export async function getAllForMeetingClient() {
-  const q = query(
+async function getRmsMeeting(id:string){
+  const q = query(collection(db,FirebaseCollectionEnum.client),  
+        where("meetingStatus", "in", [
+          MeetingStatusEnum.PENDING,
+          MeetingStatusEnum.ENDORSE,
+          MeetingStatusEnum.RESCHEDULE,
+          MeetingStatusEnum.CONFIRM,
+        ]),where("referedBy.id","==",id)) 
+        const snapShot = await getDocs(q)
+        const clients =  snapShot.docs.map(
+          (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            }
+          }
+        )
+      
+        return clients
+
+      }
+
+export async function getAllForMeetingClient(id:string,userType:string) {
+  
+  // const q = query(
+  //   collection(db, FirebaseCollectionEnum.client),
+  //   where("meetingStatus", "in", [
+  //     MeetingStatusEnum.PENDING,
+  //     MeetingStatusEnum.ENDORSE,
+  //     MeetingStatusEnum.RESCHEDULE,
+  //     MeetingStatusEnum.CONFIRM,
+  //   ])
+  // )
+ 
+  if(userType === UserType.RMS.toString()){
+  return await getRmsMeeting(id)
+  }
+ const q = query(
     collection(db, FirebaseCollectionEnum.client),
     where("meetingStatus", "in", [
       MeetingStatusEnum.PENDING,
       MeetingStatusEnum.ENDORSE,
       MeetingStatusEnum.RESCHEDULE,
+      MeetingStatusEnum.CONFIRM,
     ])
-  )
+   )
+
 
   const snapShot = await getDocs(q)
 
