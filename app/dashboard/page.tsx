@@ -73,7 +73,7 @@ export default async function Dashboard() {
 				{trackReferal.includes(
 					userType
 				) && (
-					<Link href="/TrackReferral">
+					<Link href="/view-referal">
 						<div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
 							<UserCheck
 								className="text-red-600"

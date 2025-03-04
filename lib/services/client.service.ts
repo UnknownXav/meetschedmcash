@@ -17,3 +17,9 @@ export const saveClient = async (payload: InsertClientDto) => {
 
   return resp
 }
+
+export const getReferal = async(id:string,userType:string)=>{
+  const resp = await axiosConfig.get(`client/view-referal?id=${id}&userType=${userType}`)
+
+  return resp.data;
+}

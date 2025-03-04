@@ -1,4 +1,7 @@
-import { MeetingStatusEnum } from "../types/MeetingStatus.enum";
+import {
+	MeetingStatusEnum,
+	ReferalStatusEnum,
+} from "../types/MeetingStatus.enum";
 
 export const displayMeetingByStatus = (
 	status: MeetingStatusEnum
@@ -25,4 +28,42 @@ export const displayMeetingByStatus = (
 		status === MeetingStatusEnum.CONFIRM
 	)
 		return "Confirmed";
+};
+
+export const displayReferalStatus = (
+	status: ReferalStatusEnum
+) => {
+	if (
+		status === ReferalStatusEnum.ACTIVE
+	) {
+		return "Active";
+	}
+
+	if (
+		status ===
+		ReferalStatusEnum.FOR_PAYROLL_ACCOUNT_ENROLLMENT
+	) {
+		return "For payroll account enrollment";
+	}
+
+	if (
+		status ===
+		ReferalStatusEnum.FULLY_COMPLIANT
+	) {
+		return "Fully compliant";
+	}
+
+	if (
+		status ===
+		ReferalStatusEnum.ONBOARDED
+	) {
+		return "Onboarded";
+	}
+
+	if (
+		status ===
+		ReferalStatusEnum.SYSTEM_USER
+	) {
+		return "System User";
+	}
 };

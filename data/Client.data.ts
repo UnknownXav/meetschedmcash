@@ -13,6 +13,7 @@ import {
   query,
   QueryConstraint,
   QueryDocumentSnapshot,
+  QueryFieldFilterConstraint,
   where,
 } from "firebase/firestore"
 
@@ -188,3 +189,28 @@ export async function getAllForMeetingClient(id:string,userType:string) {
 
   return clients
 }
+
+export async function getReferals(id:string,userType:string){
+  try {
+    const arrQuery:QueryFieldFilterConstraint[] = [where("meetingStatus","==",MeetingStatusEnum.DONE)];
+    if(userType === UserType.RMS.toString()){
+      arrQuery.push(where("referedBy.id","==",id))
+    }
+
+    const q = query(collection(db,FirebaseCollectionEnum.client),...arrQuery)
+  
+    const snapshot = await getDocs(q)
+
+    const clients = snapshot.docs.map(val=>{
+      return {
+        id:val.id,
+        ...val.data()
+      }
+    })
+
+    return clients
+  } catch (error) {
+    
+  }
+}
+

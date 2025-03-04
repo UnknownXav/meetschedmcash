@@ -13,20 +13,30 @@ import { changeReferalStatus } from "@/data/Meeting.data";
 import Button from "@/lib/component/Button";
 import { ChangeReferalStatusDto } from "@/lib/dto/Client.dto";
 import { ReferalStatusEnum } from "@/lib/types/MeetingStatus.enum";
+import { displayReferalStatus } from "@/lib/utils/meeting.utils";
+import { useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
 	children: React.ReactNode;
 	status: string;
 	id: string;
+	updateBy?: string;
 };
 
 export default function Alert(
 	props: Props
 ) {
-	const { id, status } = props;
+	const {
+		id,
+		status,
+		updateBy = "meeting",
+	} = props;
+	const [isLoading, setIsLoading] =
+		useState<boolean>(false);
 	async function handleSubmit() {
 		try {
+			setIsLoading(true);
 			const payload: ChangeReferalStatusDto =
 				{
 					referalStatus:
@@ -42,10 +52,20 @@ export default function Alert(
 				toast.success(
 					"Successfully Upated"
 				);
-				window.location.reload();
+				if (updateBy === "meeting") {
+					window.location.reload();
+
+					return;
+				} else {
+					window.location.href =
+						"/view-referal";
+					return;
+				}
 			}
 		} catch (error) {
 			console.log(error);
+		} finally {
+			setIsLoading(false);
 		}
 	}
 	return (
@@ -60,7 +80,11 @@ export default function Alert(
 					</AlertDialogTitle>
 					<AlertDialogDescription>
 						do you want change the
-						status to {status}?
+						status to{" "}
+						{displayReferalStatus(
+							status as ReferalStatusEnum
+						)}
+						?
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
@@ -72,7 +96,9 @@ export default function Alert(
 							handleSubmit()
 						}
 					>
-						Continue
+						{isLoading
+							? "Loading..."
+							: "Continue"}
 					</Button>
 				</AlertDialogFooter>
 			</AlertDialogContent>
