@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     
     const res =  NextResponse.json(responseData, { status: 200 })
     const session = await loginAuth(responseData)
-    res.cookies.set("session", session, {
+    res.cookies.set("_vercel_jwt", session, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production", // Secure in production
         maxAge: 86400, // 1 day
