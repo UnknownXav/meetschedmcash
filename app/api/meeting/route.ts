@@ -1,23 +1,29 @@
-import { createMeeting, getMeeting } from '@/lib/services/meeting.service';
-import { SaveMeetingType } from '@/lib/types/meeting.type';
-import { NextResponse } from 'next/server';
+import { getAllForMeetingClient } from "@/data/Client.data";
+import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function GET(req:Request) {
   try {
-    const body = await req.json() as SaveMeetingType // Parse request body
-    const resp = await createMeeting(body)
-    return NextResponse.json({data:resp}, { status: 200 });
-    
+    const { searchParams } = new URL(req.url);
+
+    // Extract specific query parameters
+
+    if(!searchParams){
+      return NextResponse.json({message:"no query"},{status:500})
+    }
+
+    const id = searchParams?.get("id") ?? "";
+    const userType = searchParams?.get("userType") ?? "";
+    const resp = await getAllForMeetingClient(id,userType)
+    return NextResponse.json(resp, { status: 200 })
   } catch (error) {
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+    console.log(error)
+    return NextResponse.json(error,{status:500})
   }
 }
 
-export async function GET() {
-    try {
-        const resp = await getMeeting()
-        return NextResponse.json(resp, { status: 200 });
-    } catch (error) {
-        
-    } 
-}
+// export async function UPDATE() {
+//   try {
+//     const resp = await getAllForMeetingClient()
+//     return NextResponse.json(resp, { status: 200 })
+//   } catch (error) {}
+// }

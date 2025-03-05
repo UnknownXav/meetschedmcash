@@ -1,21 +1,52 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
-import { SaveMeetingType } from "../types/meeting.type"
+import { axiosConfig } from "../config/axiosconfig"
+import {
+  ChangeMeetingStatus,
+  ChangeReferalStatusDto,
+  RequestToReschedulePayload,
+  RescheduleMeetingDto,
+} from "../dto/Client.dto"
+import { UserType } from "../dto/User.dto"
 
-import { FirebaseTable } from "./database.enum"
-import { db } from "../firebase"
-
-export const createMeeting = async(payload:SaveMeetingType) =>{
-    const resp = await addDoc(collection(db,FirebaseTable.MEETING),payload)
-
-    return resp;
+export async function getClientMeetings(id:string,userType:UserType) {
+  try {
+    
+    const resp = await axiosConfig.get(`meeting?id=${id}&userType=${userType}`)
+ 
+    return resp.data  
+  } catch (error) {
+   
+      return [] 
+   }
+  
 }
 
-export const getMeeting = async()=>{
-    const snapshot = await getDocs(collection(db,FirebaseTable.MEETING))
-    const meeting = snapshot.docs.map((doc: { id: any; data: () => any }) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+export async function rescheduleMeeting(
+  id: string,
+  payload: RescheduleMeetingDto
+) {
+  const resp = await axiosConfig.put(`meeting/reschedule/${id}`, payload)
 
-    return meeting;
+  return resp
+}
+
+export async function requestReschedule(
+  id: string,
+  payload: RequestToReschedulePayload
+) {
+  const resp = await axiosConfig.put(`meeting/requestresched/${id}`, payload)
+
+  return resp
+}
+
+
+export async function updateMeestingStatus(id:string,payload:ChangeMeetingStatus){
+  const resp = await axiosConfig.put(`meeting/updateStatus/${id}`,payload)
+
+  return resp;
+}
+
+export async function updateReferalStatus(id:string,payload:ChangeReferalStatusDto){
+  const resp = await axiosConfig.put(`meeting/change-referal-status/${id}`,payload)
+
+  return resp;
 }

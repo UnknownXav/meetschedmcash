@@ -1,16 +1,35 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+} from "@/data/components/ui/card"
+import { Button } from "@/data/components/ui/button"
+import { Input } from "@/data/components/ui/input"
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { db } from "@/lib/firebase";
-import { collection, deleteDoc, doc, getDocs, updateDoc, query, where, orderBy } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+  query,
+  orderBy,
+} from "firebase/firestore"
 import { Trash2, Edit, Search, UserPlus, RefreshCw, X } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/data/components/ui/dialog"
+import { Label } from "@/data/components/ui/label"
 import { useToast } from "@/hooks/use-toast";
 import { hash } from 'bcryptjs';
 

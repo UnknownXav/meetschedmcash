@@ -1,15 +1,10 @@
-"use client"; // This is necessary to use client-side routing
+import { getSession } from "@/lib/utils/auth.utils";
+import { redirect } from "next/navigation";
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export default async function SignIn() {
+	const session = await getSession();
 
-export default function Home() {
-  const router = useRouter();
-
-  // Automatically redirect to /dashboard when the component mounts
-  useEffect(() => {
-    router.push("/dashboard");
-  }, [router]);
-
-
+	if (session) {
+		redirect("/dashboard");
+	}
 }

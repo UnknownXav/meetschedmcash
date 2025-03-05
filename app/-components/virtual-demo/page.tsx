@@ -1,15 +1,25 @@
 "use client"
 
 import { useState } from "react"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/data/components/ui/dialog"
+import { Input } from "@/data/components/ui/input"
+import { Button } from "@/data/components/ui/button"
+import { Textarea } from "@/data/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/data/components/ui/select"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/contexts/AuthContext"
 import { X } from "lucide-react"
-import type { Meeting } from "@/app/types/user"
 import { db } from "@/lib/firebase"
 import { collection, addDoc } from "firebase/firestore"
 

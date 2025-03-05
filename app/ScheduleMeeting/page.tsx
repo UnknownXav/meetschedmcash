@@ -1,28 +1,41 @@
 "use client";
+import Input from "@/lib/component/Input";
+import Select from "@/lib/component/Select";
 
-import { saveMeeting } from "@/lib/serviceclient/meeting.service";
-import { SaveMeetingType } from "@/lib/types/meeting.type";
-import router from "next/router";
-import { useState } from "react";
+import { SaveMeetingType } from "@/lib/types/meeting.type"
+import { useState } from "react"
 
 export default function ScheduleMeeting() {
-  const [companyName, setCompanyName] = useState<string>("");
-  const [contactPerson, setContactPerson] = useState<string>("");
-  const [contactNumber, setContactNumber] = useState<string>("");
-  const [meetingDate, setMeetingDate] = useState<string>("");
-  const [meetingTime, setMeetingTime] = useState<string>("");
-  const [status, setStatus] = useState<"Pending" | "Confirmed" | "Endorsed" | "Rescheduled">("Pending");
-  const [payrollStatus, setPayrollStatus] = useState<"No system, payroll is computed manually and paid in cash" | "Payroll system in place, but a disbursement channel is needed for cash payroll" | "No system, but only a disbursement channel is needed for salary payments" | "others">("No system, payroll is computed manually and paid in cash");
-  const [otherPayrollStatus, setOtherPayrollStatus] = useState<string>(""); // State for custom status
-  const [clientEmails, setClientEmails] = useState<string>("");
-  const [rmEmails, setRmEmails] = useState<string>("");
-  const [isClicked, setIsClicked] = useState<boolean>(false); // State for click effect
+  const [companyName, setCompanyName] = useState<string>("")
+  const [contactPerson, setContactPerson] = useState<string>("")
+  const [contactNumber, setContactNumber] = useState<string>("")
+  const [meetingDate, setMeetingDate] = useState<string>("")
+  const [meetingTime, setMeetingTime] = useState<string>("")
+  const [status, setStatus] = useState<
+    "Pending" | "Confirmed" | "Endorsed" | "Rescheduled"
+  >("Pending")
+  const [payrollStatus, setPayrollStatus] = useState<
+    | "No system, payroll is computed manually and paid in cash"
+    | "Payroll system in place, but a disbursement channel is needed for cash payroll"
+    | "No system, but only a disbursement channel is needed for salary payments"
+    | "others"
+  >("No system, payroll is computed manually and paid in cash")
+  const [otherPayrollStatus, setOtherPayrollStatus] = useState<string>("") // State for custom status
+  const [clientEmails, setClientEmails] = useState<string>("")
+  const [rmEmails, setRmEmails] = useState<string>("")
+  const [isClicked, setIsClicked] = useState<boolean>(false) // State for click effect
 
   async function handleSubmit() {
     try {
-      if (!companyName || !contactPerson || !contactNumber || !meetingDate || !meetingTime) {
-        alert("All fields are required");
-        return;
+      if (
+        !companyName ||
+        !contactPerson ||
+        !contactNumber ||
+        !meetingDate ||
+        !meetingTime
+      ) {
+        alert("All fields are required")
+        return
       }
 
       const payload: SaveMeetingType = {
@@ -36,54 +49,60 @@ export default function ScheduleMeeting() {
         dateSubmitted: new Date().toISOString(),
         clientEmails: clientEmails,
         rmEmails: rmEmails,
-      };
-
-      const resp = await saveMeeting(payload);
-
-      if (resp.status == 200) {
-        if (confirm("Successfully added")) {
-          window.location.reload();
-        }
       }
+
+      // const resp = await saveMeeting(
+      // 	payload
+      // );
+
+      //   if (resp.status == 200) {
+      //     if (confirm("Successfully added")) {
+      //       window.location.reload()
+      //     }
+      //   }
     } catch (error) {
-      alert("Internal server error");
+      alert("Internal server error")
     }
   }
-
-
 
   return (
     <div className="flex justify-center mt-10">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Schedule a Virtual Demo</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Schedule a Virtual Demo
+        </h2>
         <div className="flex flex-col gap-4">
-          <input
+          <Input
             className="p-3 border border-gray-300 w-full rounded-md hover:bg-red-300"
             placeholder="Company Name"
             onChange={(e) => setCompanyName(e.target.value)}
           />
-          <select
-            className="p-3 border border-gray-300 w-full rounded-md hover:bg-red-300"
+          <Select
+            className="p-3 border border-gray-300 w-full rounded-md hover:bg-red-50"
             value={payrollStatus}
-            onChange={(e) => setPayrollStatus(
-              e.target.value as
-                | "No system, payroll is computed manually and paid in cash"
-                | "Payroll system in place, but a disbursement channel is needed for cash payroll"
-                | "No system, but only a disbursement channel is needed for salary payments"
-                | "others"
-            )}
+            onChange={(e) =>
+              setPayrollStatus(
+                e.target.value as
+                  | "No system, payroll is computed manually and paid in cash"
+                  | "Payroll system in place, but a disbursement channel is needed for cash payroll"
+                  | "No system, but only a disbursement channel is needed for salary payments"
+                  | "others"
+              )
+            }
           >
             <option value="No system, payroll is computed manually and paid in cash">
               No system, payroll is computed manually and paid in cash
             </option>
             <option value="Payroll system in place, but a disbursement channel is needed for cash payroll">
-              Payroll system in place, but a disbursement channel is needed for cash payroll
+              Payroll system in place, but a disbursement channel is needed for
+              cash payroll
             </option>
             <option value="No system, but only a disbursement channel is needed for salary payments">
-              No system, but only a disbursement channel is needed for salary payments
+              No system, but only a disbursement channel is needed for salary
+              payments
             </option>
             <option value="others">Others</option>
-          </select>
+          </Select>
 
           {payrollStatus === "others" && (
             <input
@@ -140,8 +159,8 @@ export default function ScheduleMeeting() {
           </p>
           <button
             onClick={() => {
-              setIsClicked(true); // Set clicked state to true
-              handleSubmit();
+              setIsClicked(true) // Set clicked state to true
+              handleSubmit()
             }}
             className={`p-3 rounded-md text-white transition-all 
               ${isClicked ? "bg-red-600" : "bg-red-500 hover:bg-red-100"}`}
@@ -151,5 +170,5 @@ export default function ScheduleMeeting() {
         </div>
       </div>
     </div>
-  );
+  )
 }

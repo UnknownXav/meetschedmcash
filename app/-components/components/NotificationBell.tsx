@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Bell } from 'lucide-react';
-import { 
-  collection, 
-  query, 
-  onSnapshot, 
-  orderBy, 
-  updateDoc, 
-  doc 
-} from 'firebase/firestore';
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  updateDoc,
+  doc,
+} from "firebase/firestore"
 import { db } from '@/lib/firebase';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/data/components/ui/dialog"
+import { Button } from "@/data/components/ui/button"
 
 export const NotificationBell: React.FC = () => {
   const [notifications, setNotifications] = useState<any[]>([]);
