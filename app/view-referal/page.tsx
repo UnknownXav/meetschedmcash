@@ -31,7 +31,8 @@ export default async function ViewReferal({
 		id,
 		userType
 	)) as Array<ClientDto>;
-	const queryId = searchParams?.id;
+	const queryId =
+		searchParams?.id as string;
 	return (
 		<div className="w-full flex-row   ">
 			<div className=" my-6 flex flex-row w-[70%] m-auto items-center justify-between">

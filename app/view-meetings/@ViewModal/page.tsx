@@ -35,7 +35,7 @@ export default function ViewModal(
 	props: Props
 ) {
 	const [status, setStatus] =
-		useState<string>(
+		useState<ReferalStatusEnum>(
 			ReferalStatusEnum.NONE
 		);
 	const { data, userType } = props;
@@ -184,7 +184,10 @@ export default function ViewModal(
 				<div className=" w-[100%]">
 					<Select
 						onChange={(e) =>
-							setStatus(e.target.value)
+							setStatus(
+								e.target
+									.value as ReferalStatusEnum
+							)
 						}
 						value={status}
 					>

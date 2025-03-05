@@ -86,7 +86,7 @@ export default async function Dashboard() {
 					</Link>
 				)}
 
-				<Link href="/PayrollWalkthrough">
+				<Link href="/view-payroll-info">
 					<div className="bg-white shadow-md rounded-xl p-8 flex flex-col items-center hover:bg-red-200 transition cursor-pointer">
 						<PlayCircle
 							className="text-red-600"
