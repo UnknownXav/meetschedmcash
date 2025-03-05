@@ -19,7 +19,7 @@ import { toast } from "sonner";
 
 type Props = {
 	children: React.ReactNode;
-	status: string;
+	status: ReferalStatusEnum;
 	id: string;
 	updateBy?: string;
 };
@@ -50,7 +50,7 @@ export default function Alert(
 
 			if (resp) {
 				toast.success(
-					"Successfully Upated"
+					"Successfully Updated"
 				);
 				if (updateBy === "meeting") {
 					window.location.reload();
