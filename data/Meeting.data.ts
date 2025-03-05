@@ -43,6 +43,7 @@ export const rescheduleMeeting = async (payload: RescheduleMeetingPayload) => {
     reciever: "",
     notify: [UserType.MCASH, UserType.ADMIN, UserType.SPBD],
     userTypeCreated: UserType.RMS,
+    readby:[]
   }
 
   await createNotification(notifPayload)
@@ -72,6 +73,7 @@ export const requestToRescheduleService = async (
     reciever: collectionData.referedBy.id,
     notify: [UserType.MCASH, UserType.ADMIN, UserType.SPBD],
     userTypeCreated: UserType.RMS,
+    readby:[]
   }
 
   await createNotification(notifPayload)

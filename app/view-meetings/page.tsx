@@ -12,7 +12,6 @@ import { MeetingStatusEnum } from "@/lib/types/MeetingStatus.enum";
 import {
 	ChevronLeft,
 	Eye,
-	PencilLine,
 } from "lucide-react";
 import ViewModal from "./@ViewModal/page";
 import { LoginResponse } from "@/lib/dto/User.dto";
@@ -131,19 +130,13 @@ export default async function ViewMeetings() {
 												userType
 											}
 										>
-											<button className=" rounded-full p-2 bg-red-200">
+											<button className=" rounded-full p-2 bg-red-500">
 												<Eye
 													size={12}
-													color="black"
+													color="white"
 												/>
 											</button>
 										</ViewModal>
-										<button className=" rounded-full p-2 bg-red-500">
-											<PencilLine
-												size={12}
-												color="white"
-											/>
-										</button>
 									</div>
 								</TableCell>
 							</TableRow>

@@ -1,6 +1,6 @@
 import { UserType } from "./User.dto"
 
-export type Notification = {
+export type NotificationDto = {
   id: string
   title: string
   message: string
@@ -9,6 +9,7 @@ export type Notification = {
   reciever: string | UserType
   userTypeCreated: UserType
   notify: Array<UserType>
+  readby:Array<UserType>
 }
 
-export type CreateNotificaton = Omit<Notification, "id">
+export type CreateNotificaton = Omit<NotificationDto, "id">

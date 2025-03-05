@@ -2,15 +2,17 @@ import { LoginResponse } from "@/lib/dto/User.dto";
 import { getSession } from "@/lib/utils/auth.utils";
 import { headers } from "next/headers";
 import LogoutButton from "./component/LogoutButton";
+import Notifition from "./component/@NotificationButton/page";
 
 export default async function NavBar() {
 	const user =
 		(await getSession()) as LoginResponse;
-	console.log("WEW");
+
 	if (!user) {
 		return;
 	}
-	const { username } = user;
+	const { username, id, userType } =
+		user;
 	const headersList = headers();
 	const currentPath =
 		headersList.get("x-invoke-path") ||
@@ -29,6 +31,10 @@ export default async function NavBar() {
 					<div className=" h-[30px] w-[30px] bg-gray-200 rounded-full" />
 					<p>{username}</p>
 				</div>
+				<Notifition
+					id={id}
+					userType={userType}
+				/>
 				<LogoutButton />
 			</div>
 		</div>

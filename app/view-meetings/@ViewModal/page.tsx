@@ -140,18 +140,12 @@ export default function ViewModal(
 
 	const displayButtonToRequestToReschedule =
 		() => {
-			const includeArray = [
-				UserType.MCASH,
-				UserType.SPBD,
-			];
 			const includedStatus = [
 				MeetingStatusEnum.PENDING,
 				MeetingStatusEnum.ENDORSE,
 			];
 			if (
-				includeArray.includes(
-					userType
-				) &&
+				data.meetingBy === userType &&
 				includedStatus.includes(
 					data.meetingStatus
 				)
