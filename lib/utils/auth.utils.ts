@@ -25,17 +25,17 @@ export const loginAuth = async(payload:LoginResponse)=>{
     const expires = new Date(Date.now() + 20000 * 1000); 
 
     const session = await encrypt({user,expires})
-    console.log("SESSIon",session)
+    
     return session;
 }
 
 export async function logout() {
     // Destroy the session
-    cookies().set("session", "", { expires: new Date(0), maxAge: 0 });
+    cookies().set("_vercel_jwt", "", { expires: new Date(0), maxAge: 0 });
   }
   
 export const updateSession = async(request:NextRequest)=>{
-    const session = request.cookies.get('session')?.value;
+    const session = request.cookies.get('_vercel_jwt')?.value;
    
     if (!session) {
     
@@ -48,7 +48,7 @@ export const updateSession = async(request:NextRequest)=>{
     
        
         res.cookies.set({
-            name:'session',
+            name:'_vercel_jwt',
             value:await encrypt(parsed),
             httpOnly:true,
             expires:parsed.exp,
@@ -75,8 +75,9 @@ export const updateSession = async(request:NextRequest)=>{
 
 
 
+
 export const getSession = async():Promise<LoginResponse | null>=>{
-    const session = cookies().get('session')?.value;
+    const session = cookies().get('_vercel_jwt')?.value;
     if(!session) return null;
    // console.log("WEW",session)
     const dcrp = await decrypt(session)
