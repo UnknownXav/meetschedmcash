@@ -47,7 +47,8 @@ export default function CreateClient() {
 		useState<CompanyInfoData>({
 			companyName: "",
 			payrollStatus: "",
-			payrollStatusOthers: "",
+			payrollStatusOthers:
+				clientPayrollStatus[0].value,
 			contactNumber: "",
 			contactPerson: "",
 			email: "",

@@ -27,7 +27,7 @@ export default async function Dashboard() {
 	const { userType } = user;
 
 	return (
-		<div className="flex flex-col items-center justify-center flex-1 bg-gray-100 h-full">
+		<div className="flex flex-col items-center pt-14 flex-1 bg-gray-100 h-full">
 			<div className="text-center">
 				<h1 className="text-4xl font-bold text-red-600">
 					WELCOME!
