@@ -13,10 +13,11 @@ import { NotificationDto } from "@/lib/dto/Notification.dto";
 import { UserType } from "@/lib/dto/User.dto";
 import { db } from "@/lib/firebase";
 import { FirebaseCollectionEnum } from "@/lib/types/FirebaseCollection.enum";
-import { formatDate } from "@/lib/utils/date.utils";
+import { formatDateWithTime } from "@/lib/utils/date.utils";
 import {
 	collection,
 	onSnapshot,
+	orderBy,
 	query,
 	QueryFieldFilterConstraint,
 	where,
@@ -60,7 +61,8 @@ export default function Notifition(
 				db,
 				FirebaseCollectionEnum.notification
 			),
-			...qry
+			...qry,
+			orderBy("dateCreated", "desc")
 		);
 		const unsubscribe = onSnapshot(
 			q,
@@ -105,7 +107,7 @@ export default function Notifition(
 								</p>
 
 								<p className=" mt-3 text-[10px]">
-									{formatDate(
+									{formatDateWithTime(
 										val.dateCreated
 									)}
 								</p>

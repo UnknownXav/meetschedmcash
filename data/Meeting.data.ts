@@ -36,7 +36,7 @@ export const rescheduleMeeting = async (payload: RescheduleMeetingPayload) => {
   })
 
   const notifPayload: CreateNotificaton = {
-    message: `${collectionData.company.name} has been reschedule to ${payload.date} ${payload.time}`,
+    message: `Good day, MCASH/SPBD team. Please be informed that the ${collectionData.company} meeting has been rescheduled to ${payload.date}, from ${payload.time}. Kindly check on the meeting schedules.`,
     dateCreated: new Date().toISOString(),
     title: "Meeting Reschedule",
     sender: "",
@@ -66,7 +66,7 @@ export const requestToRescheduleService = async (
   })
 
   const notifPayload: CreateNotificaton = {
-    message: `hi ${collectionData.referedBy.email} we are requesting to reschedule the meeting our to ${collectionData.company.name} due to ${payload.remarks}`,
+    message: `Good day, ${collectionData.referedBy.email}. The ${collectionData.meetingBy} MCash team is requesting to reschedule the meeting with FED Company due to unavailability`,
     dateCreated: new Date().toISOString(),
     title: "Request to Reschedule Meeting",
     sender: "",

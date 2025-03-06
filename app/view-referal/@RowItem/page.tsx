@@ -38,7 +38,7 @@ export default function RowItem(
 		);
 	return (
 		<TableRow key={item?.id}>
-			<TableCell className="font-medium">
+			<TableCell className="text	-right">
 				{item?.company.name}
 			</TableCell>
 			<TableCell className=" text-center">
@@ -47,16 +47,11 @@ export default function RowItem(
 						.estimatedNumberEmployee
 				}
 			</TableCell>
-			<TableCell>
-				{item?.meetings.date}
-			</TableCell>
-			<TableCell>
-				{item?.meetings.time}
-			</TableCell>
-			<TableCell>
+			<TableCell className=" text-center">
 				{item?.meetingBy}
 			</TableCell>
 			<TableCell
+				className=" text-center"
 				style={{
 					color:
 						ReferalStatusColors[
@@ -111,7 +106,7 @@ export default function RowItem(
 				)}
 			</TableCell>
 			{userType === item.meetingBy ? (
-				<TableCell>
+				<TableCell className=" flex justify-end ">
 					{queryId === item?.id ? (
 						<div className=" flex flex-row gap-3 justify-end">
 							<Alert

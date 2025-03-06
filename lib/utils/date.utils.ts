@@ -8,3 +8,7 @@ export const getMonth =(date:string|Date) =>{
 export const formatDate = (date:string | Date) =>{
     return dayjs(date).format("MMM  DD, YYYY ")
 }
+
+export const formatDateWithTime = (date:string | Date) =>{
+    return dayjs(date).format("MMM DD, YYYY HH:mm")
+}

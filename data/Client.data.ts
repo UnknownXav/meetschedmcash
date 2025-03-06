@@ -10,6 +10,7 @@ import {
   collection,
   DocumentData,
   getDocs,
+  orderBy,
   query,
   QueryConstraint,
   QueryDocumentSnapshot,
@@ -135,7 +136,7 @@ async function getRmsMeeting(id:string){
           MeetingStatusEnum.ENDORSE,
           MeetingStatusEnum.RESCHEDULE,
           MeetingStatusEnum.CONFIRM,
-        ]),where("referedBy.id","==",id)) 
+        ]),where("referedBy.id","==",id),orderBy("dateCreated","desc")) 
         const snapShot = await getDocs(q)
         const clients =  snapShot.docs.map(
           (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
@@ -172,7 +173,7 @@ export async function getAllForMeetingClient(id:string,userType:string) {
       MeetingStatusEnum.ENDORSE,
       MeetingStatusEnum.RESCHEDULE,
       MeetingStatusEnum.CONFIRM,
-    ])
+    ]),orderBy("dateCreated","desc")
    )
 
 
@@ -197,7 +198,7 @@ export async function getReferals(id:string,userType:string){
       arrQuery.push(where("referedBy.id","==",id))
     }
 
-    const q = query(collection(db,FirebaseCollectionEnum.client),...arrQuery)
+    const q = query(collection(db,FirebaseCollectionEnum.client),...arrQuery,orderBy("dateCreated","desc"))
   
     const snapshot = await getDocs(q)
 
@@ -210,7 +211,8 @@ export async function getReferals(id:string,userType:string){
 
     return clients
   } catch (error) {
-    
+    console.log(error)
+    return []  
   }
 }
 

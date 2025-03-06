@@ -11,6 +11,7 @@ import { ChevronLeft } from "lucide-react";
 import { ClientDto } from "@/lib/dto/Client.dto";
 import Link from "next/link";
 import RowItem from "./@RowItem/page";
+import DisplayReferalStatus from "./@DisplayReferalStatus/page";
 
 export default async function ViewReferal({
 	searchParams,
@@ -52,21 +53,18 @@ export default async function ViewReferal({
 			<Table className=" max-w-[70%] m-auto">
 				<TableHeader>
 					<TableRow>
-						<TableHead>
+						<TableHead className=" text-left">
 							Company Name
 						</TableHead>
 						<TableHead className=" text-center">
 							No. Employee
 						</TableHead>
-						<TableHead>
-							Meeting Date
-						</TableHead>
-						<TableHead>Time</TableHead>
-						<TableHead>
+
+						<TableHead className="text-center">
 							Lead by
 						</TableHead>
 
-						<TableHead>
+						<TableHead className=" text-center">
 							Status
 						</TableHead>
 
@@ -88,6 +86,7 @@ export default async function ViewReferal({
 					})}
 				</TableBody>
 			</Table>
+			<DisplayReferalStatus />
 		</div>
 	);
 }

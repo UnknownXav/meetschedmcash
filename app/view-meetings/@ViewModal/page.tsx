@@ -44,10 +44,14 @@ export default function ViewModal(
 			UserType.ADMIN,
 			UserType.MCASH,
 		];
-
+		const included = [
+			MeetingStatusEnum.DONE,
+			MeetingStatusEnum.CONFIRM,
+		];
 		if (
-			data.meetingStatus ===
-			MeetingStatusEnum.DONE
+			included.includes(
+				data.meetingStatus
+			)
 		) {
 			return;
 		}
