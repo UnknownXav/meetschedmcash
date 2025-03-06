@@ -1,4 +1,4 @@
-import { CreateUserDto, InsertUserDto, LoginDto, LoginResponse, UserDto } from "@/lib/dto/User.dto";
+import { CreateUserDto, InsertUserDto, LoginDto, LoginResponse, UserDto, UserType } from "@/lib/dto/User.dto";
 import { db } from "@/lib/firebase";
 import { FirebaseCollectionEnum } from "@/lib/types/FirebaseCollection.enum";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
@@ -43,7 +43,7 @@ export const loginUser = async(loginPayload:LoginDto)=>{
 }
 
 export const getRms = async() =>{
-    const q = query(collection(db,FirebaseCollectionEnum.user),where("userType","==","RMS"))
+    const q = query(collection(db,FirebaseCollectionEnum.user),where("userType","==",UserType.RMS))
 
     const snapShot = await getDocs(q)
 
