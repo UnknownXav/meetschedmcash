@@ -44,6 +44,13 @@ export default function ViewModal(
 			UserType.ADMIN,
 			UserType.MCASH,
 		];
+
+		if (
+			data.meetingStatus ===
+			MeetingStatusEnum.DONE
+		) {
+			return;
+		}
 		if (
 			includedUser.includes(userType) &&
 			data.meetingBy === UserType.MCASH
@@ -68,6 +75,13 @@ export default function ViewModal(
 	};
 
 	const displayConfirmButton = () => {
+		if (
+			data.meetingStatus ===
+			MeetingStatusEnum.DONE
+		) {
+			return;
+		}
+
 		const userTypeIncluded = [
 			UserType.ADMIN,
 			UserType.MCASH,

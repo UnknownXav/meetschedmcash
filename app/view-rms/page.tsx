@@ -18,6 +18,7 @@ import Link from "next/link";
 export default async function ViewRms() {
 	const rmsUser =
 		(await getRms()) as Array<LoginResponse>;
+
 	return (
 		<div className="w-full flex-row   ">
 			<div className=" my-6 flex flex-row w-[70%] m-auto items-center justify-between">
@@ -33,7 +34,7 @@ export default async function ViewRms() {
 				<div className=" w-[18px]" />
 			</div>
 
-			<Table className=" w-[50%] m-auto">
+			<Table className=" w-[50%] m-auto h-full overflow-y-auto">
 				<TableHeader>
 					<TableRow>
 						<TableHead className="">

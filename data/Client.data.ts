@@ -10,6 +10,7 @@ import {
   collection,
   DocumentData,
   getDocs,
+  orderBy,
   query,
   QueryConstraint,
   QueryDocumentSnapshot,
@@ -197,7 +198,7 @@ export async function getReferals(id:string,userType:string){
       arrQuery.push(where("referedBy.id","==",id))
     }
 
-    const q = query(collection(db,FirebaseCollectionEnum.client),...arrQuery)
+    const q = query(collection(db,FirebaseCollectionEnum.client),...arrQuery,orderBy("createdAt",OrderDirectio))
   
     const snapshot = await getDocs(q)
 
