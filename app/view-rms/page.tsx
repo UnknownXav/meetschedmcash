@@ -15,7 +15,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default async function ViewRms() {
+export default async function ViewRms({
+	searchParams,
+}: {
+	searchParams: {
+		[key: string]: string;
+	};
+}) {
 	const rmsUser =
 		(await getRms()) as Array<LoginResponse>;
 
