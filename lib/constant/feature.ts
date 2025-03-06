@@ -2,7 +2,7 @@ import { UserType } from "../dto/User.dto";
 
 const {ADMIN,SPBD,MCASH,RMS} = UserType
 
-export const scheduleDemo:Array<UserType> = [ADMIN,SPBD,MCASH,RMS];
+export const scheduleDemo:Array<UserType> = [RMS];
 
 export const viewMeetings:Array<UserType> = [ADMIN,SPBD,MCASH,RMS];
 
