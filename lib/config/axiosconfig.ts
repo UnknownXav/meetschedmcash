@@ -5,5 +5,5 @@ const LOCAL = "http://localhost:3000/api/"
 
 
 export const axiosConfig = axios.create({
-  baseURL: LOCAL,
+  baseURL: URL_PROD,
 })
