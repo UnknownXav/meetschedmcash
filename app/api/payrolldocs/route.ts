@@ -2,6 +2,7 @@ import { createDocs, getAllDocs } from "@/data/PayrolDocs.data";
 import { CreatePayrollDocs } from "@/lib/dto/PayrollDocsDto.dto";
 import { NextResponse } from "next/server";
 
+export const revalidate = 1
 export async function GET() {
     try {
         const resp = await getAllDocs();
