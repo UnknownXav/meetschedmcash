@@ -18,38 +18,38 @@ export default async function ViewPayrollInfo() {
 		(await getDocsList()) as PayrollDocsInfoDto[];
 	const { userType } = session;
 	return (
+
+		<><Link
+			href="/dashboard"
+			className=" flex flex-row items-center gap-3 hover:text-red-500"
+		>
+			<ChevronLeft size={20} /> Back
+		</Link>
 		<div className=" w-[50%] m-auto mt-10">
-			<Link
-					href="/dashboard"
-					className=" flex flex-row items-center gap-3 hover:text-red-500"
-				>
-					<ChevronLeft size={20} /> Back
-				</Link>
-			<div className="font-bold text-xl font-red text-red-500 text-left">
+
+				<div className="font-bold text-xl font-red text-red-500 text-left">
 					About ML Payroll PRO
 				</div>
 				<div className="text-sm text-justify text-black">
-					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
-					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling, 
-					cash payroll, or individual transfers. 
+					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs)
+					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling,
+					cash payroll, or individual transfers.
 				</div>
-				
-			<div className=" flex flex-row justify-end py-3 border-b items-center">
-			
-				<CreateButton
-					userType={userType}
-				/>
-			</div>
-			
-			<div className=" h-3" />
-			{data.map((val) => {
-				return (
-					<ItemCard
-						key={val.id}
-						{...val}
-					/>
-				);
-			})}
-		</div>
+
+				<div className=" flex flex-row justify-end py-3 border-b items-center">
+
+					<CreateButton
+						userType={userType} />
+				</div>
+
+				<div className=" h-3" />
+				{data.map((val) => {
+					return (
+						<ItemCard
+							key={val.id}
+							{...val} />
+					);
+				})}
+			</div></>
 	);
 }

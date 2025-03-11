@@ -14,6 +14,7 @@ import Input from "@/lib/component/Input";
 import { CreatePayrollDocs } from "@/lib/dto/PayrollDocsDto.dto";
 import { UserType } from "@/lib/dto/User.dto";
 import { addPayrollInfo } from "@/lib/services/payrollinfo.service";
+import { PlusIcon } from "lucide-react";
 import {
 	useEffect,
 	useState,
@@ -125,7 +126,7 @@ export default function CreateButton(
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button>New</Button>
+			<PlusIcon className="w-5 h-5" /> {/* Plus icon instead of text */}
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
