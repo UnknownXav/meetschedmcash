@@ -126,7 +126,7 @@ export default function CreateButton(
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-			<PlusIcon className="w-5 h-5" /> {/* Plus icon instead of text */}
+				<Button><PlusIcon className="w-5 h-5" /> {/* Plus icon instead of text */}</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
