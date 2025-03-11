@@ -19,28 +19,27 @@ export default async function ViewPayrollInfo() {
 	const { userType } = session;
 	return (
 		<div className=" w-[50%] m-auto mt-10">
-			<div className=" flex flex-row justify-between py-3 border-b items-center">
 			<Link
 					href="/dashboard"
 					className=" flex flex-row items-center gap-3 hover:text-red-500"
 				>
 					<ChevronLeft size={20} /> Back
 				</Link>
-
-				<p className=" font-bold text-xl font-red text-red-400">
+			<div className=" font-bold text-xl font-red text-red-400 text-left">
 					About ML Payroll PRO
+				<p className=" font text-md text-justify">
+					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
+					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling, 
+					cash payroll, or individual transfers. 
 				</p>
-				
-
+				</div>
+			<div className=" flex flex-row justify-between py-3 border-b items-center">
+			
 				<CreateButton
 					userType={userType}
 				/>
 			</div>
-			<div className=" font text-md">
-					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
-					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling, 
-					cash payroll, or individual transfers. 
-				</div>
+			
 			<div className=" h-3" />
 			{data.map((val) => {
 				return (
