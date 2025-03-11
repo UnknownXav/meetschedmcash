@@ -27,11 +27,11 @@ export default async function ViewPayrollInfo() {
 				</Link>
 			<div className=" font-bold text-xl font-red text-red-400 text-left">
 					About ML Payroll PRO
-				<p className=" font text-md text-justify">
+				<div className=" font text-sm text-justify text-black">
 					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
 					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling, 
 					cash payroll, or individual transfers. 
-				</p>
+				</div>
 				</div>
 			<div className=" flex flex-row justify-between py-3 border-b items-center">
 			
