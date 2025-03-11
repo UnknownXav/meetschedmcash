@@ -28,7 +28,7 @@ export default function CreateButton(
 	props: Props
 ) {
 	if (
-		props.userType !== UserType.ADMIN
+		props.userType !== UserType.MCASH
 	) {
 		return <></>;
 	}

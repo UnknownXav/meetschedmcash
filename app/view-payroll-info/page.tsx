@@ -4,6 +4,8 @@ import { LoginResponse } from "@/lib/dto/User.dto";
 import { getDocsList } from "@/lib/services/payrollinfo.service";
 import { PayrollDocsInfoDto } from "@/lib/dto/PayrollDocsDto.dto";
 import ItemCard from "./_component/ItemCard";
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 
 export default async function ViewPayrollInfo() {
 	const session =
@@ -18,6 +20,12 @@ export default async function ViewPayrollInfo() {
 	return (
 		<div className=" w-[50%] m-auto mt-10">
 			<div className=" flex flex-row justify-between py-3 border-b items-center">
+			<Link
+					href="/dashboard"
+					className=" flex flex-row items-center gap-3 hover:text-red-500"
+				>
+					<ChevronLeft size={20} /> Back
+				</Link>
 				<p className=" font-bold text-lg">
 					Payroll Information
 				</p>
