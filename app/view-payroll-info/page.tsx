@@ -27,7 +27,7 @@ export default async function ViewPayrollInfo() {
 					<ChevronLeft size={20} /> Back
 				</Link>
 
-				<p className=" font-bold text-lg font-red text-red-400">
+				<p className=" font-bold text-xl font-red text-red-400">
 					About ML Payroll PRO
 				</p>
 				
@@ -36,8 +36,8 @@ export default async function ViewPayrollInfo() {
 					userType={userType}
 				/>
 			</div>
-			<div className=" font text-sm">
-					ML Payroll Pro is cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
+			<div className=" font text-md">
+					ML Payroll Pro is a cutting-edge payroll system designed specifically for Micro, Small, and Medium Enterprises (MSMEs) 
 					aiming to streamline and automate their payroll processes. This solution is particularly beneficial for businesses currently reliant on manual handling, 
 					cash payroll, or individual transfers. 
 				</div>
