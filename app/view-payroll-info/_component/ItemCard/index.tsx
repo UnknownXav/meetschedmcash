@@ -23,8 +23,8 @@ export default function ItemCard(
 					{description}
 				</p>
 			</div>
-			<div className=" flex justify-center items-center">
-				<Button onClick={openNewTab} px-4 pl-6>
+			<div className=" flex justify-center items-center px-5">
+				<Button onClick={openNewTab}>
 					view
 				</Button>
 			</div>
