@@ -21,7 +21,7 @@ export default async function ViewPayrollInfo() {
 
 		<><Link
 			href="/dashboard"
-			className=" flex flex-row items-center gap-3 hover:text-red-500"
+			className=" flex flex-row items-center gap-3 my-2 hover:text-red-500"
 		>
 			<ChevronLeft size={20} /> Back
 		</Link>

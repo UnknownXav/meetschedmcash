@@ -15,7 +15,7 @@ export default function ItemCard(
 	}
 	return (
 		<div className=" shadow-md bg-white border-gray-200 border rounded-md w-full p-5 flex flex-row justify-between my-3 ">
-			<div className=" flex flex-col gap-3">
+			<div className=" flex flex-col gap-6">
 				<p className="  font-bold text-red-500">
 					{title}
 				</p>

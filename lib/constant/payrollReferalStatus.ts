@@ -11,7 +11,7 @@ type PayrollStatusInfo = {
 
 export const payrollReferalStatusInfo:Array<PayrollStatusInfo> = [{
     id:ReferalStatusEnum.FOR_PAYROLL_ACCOUNT_ENROLLMENT,
-    description:"Clients in this stage has been successfully registered in the system but have not yet started using it. Follow up is required to insure progress and facilitate the transition to active use."
+    description:"Clients at this stage have successfully attended the demo presentation and are subject to onboarding. An email has been sent requesting the necessary details for their PayPRO account enrollment. A follow-up is required to ensure the details are sent to the MCash Division."
 },
 {
     id:ReferalStatusEnum.ONBOARDED,
