@@ -36,7 +36,7 @@ export const rescheduleMeeting = async (payload: RescheduleMeetingPayload) => {
   })
 
   const notifPayload: CreateNotificaton = {
-    message: `Good day, MCASH/SPBD team. Please be informed that the ${collectionData.company} meeting has been rescheduled to ${payload.date}, from ${payload.time}. Kindly check on the meeting schedules.`,
+    message: `Good day, MCASH/SPBD team. Please be informed that the ${collectionData.company.name} meeting has been rescheduled to ${payload.date}, from ${payload.time}. Kindly check on the meeting schedules.`,
     dateCreated: new Date().toISOString(),
     title: "Meeting Reschedule",
     sender: "",
