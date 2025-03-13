@@ -301,7 +301,6 @@ export default function ViewModal(
 								data?.company
 									?.payrollStatus
 							}{" "}
-							employees
 						</p>
 					</div>
 					<p className=" font-semibold my-3">
