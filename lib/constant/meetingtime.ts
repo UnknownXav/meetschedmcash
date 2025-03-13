@@ -1,5 +1,4 @@
 export const meetingScheduleTemplate =  [
-    { value: "08:00-09:30", label: "8:00 AM - 9:30 AM" },
     { value: "09:00-10:30", label: "9:00 AM - 10:30 AM" },
     { value: "10:30-12:00", label: "10:30 AM - 12:00 PM" },
     { value: "13:00-14:30", label: "1:00 PM - 2:30 PM" },
