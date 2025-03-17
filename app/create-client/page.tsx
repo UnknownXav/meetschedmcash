@@ -219,7 +219,7 @@ export default function CreateClient() {
 			setIsLoading(true);
 			const time =
 				meetingScheduleTemplate
-					.slice(0, 2)
+					.slice(0, 1)
 					.map((val) => val.value);
 			const meetingBy = time.includes(
 				meetingInfo.meetingTime
