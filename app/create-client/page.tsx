@@ -230,14 +230,11 @@ export default function CreateClient() {
 				company: {
 					name: companyInfo.companyName,
 					email: companyInfo.email,
-					contactNumber:
-						companyInfo.contactNumber,
-					contactPerson:
-						companyInfo.contactPerson,
-					payrollStatus:
-						companyInfo.payrollStatus,
-					estimatedNumberEmployee:
-						companyInfo.estimatedNumberOfEmployee,
+					contactNumber: companyInfo.contactNumber,
+					contactPerson: companyInfo.contactPerson,
+					payrollStatus: companyInfo.payrollStatus,
+					estimatedNumberEmployee: companyInfo.estimatedNumberOfEmployee,
+					isEnrolledEmployee: undefined,
 				},
 				meetings: {
 					date: meetingInfo.meetingDate,
