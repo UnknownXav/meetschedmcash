@@ -215,6 +215,19 @@ export default function CreateClient() {
 	}
 
 	async function handleConfirm() {
+		const result = meetingInfoSchema.safeParse(meetingInfo);
+
+		if (!result.success) {
+			const issue = result.error.format();
+			setMeetingErros({
+				meetingDate: issue.meetingDate?._errors?.[0] || "",
+				meetingTime: issue.meetingTime?._errors?.[0] || "",
+				clientEmail: issue.clientEmail?._errors?.[0] || "",
+				rms: issue.rms?._errors?.[0] || "",
+			});
+			return;
+		}
+
 		try {
 			setIsLoading(true);
 			const time =
@@ -230,11 +243,14 @@ export default function CreateClient() {
 				company: {
 					name: companyInfo.companyName,
 					email: companyInfo.email,
-					contactNumber: companyInfo.contactNumber,
-					contactPerson: companyInfo.contactPerson,
-					payrollStatus: companyInfo.payrollStatus,
-					estimatedNumberEmployee: companyInfo.estimatedNumberOfEmployee,
-					
+					contactNumber:
+						companyInfo.contactNumber,
+					contactPerson:
+						companyInfo.contactPerson,
+					payrollStatus:
+						companyInfo.payrollStatus,
+					estimatedNumberEmployee:
+						companyInfo.estimatedNumberOfEmployee,
 				},
 				meetings: {
 					date: meetingInfo.meetingDate,
