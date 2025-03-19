@@ -21,5 +21,5 @@ export const companyInfoSchema = z.object({
   contactPerson: z.string().min(1, requiredMessage("Contact person ")),
   estimatedNumberOfEmployee: z
     .number()
-    .min(1, "The number of employee should less than 1"),
+    .min(0, "The number of employee should less than 1"),
 })
