@@ -2,7 +2,6 @@ import { MeetingStatusEnum, ReferalStatusEnum } from "../types/MeetingStatus.enu
 import { UserType } from "./User.dto";
 
 export type CompanyDetailsDto = {
-  isEnrolledEmployee: any;
   name: string
   email: string
   contactNumber: string

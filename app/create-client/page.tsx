@@ -234,7 +234,7 @@ export default function CreateClient() {
 					contactPerson: companyInfo.contactPerson,
 					payrollStatus: companyInfo.payrollStatus,
 					estimatedNumberEmployee: companyInfo.estimatedNumberOfEmployee,
-					isEnrolledEmployee: undefined,
+					
 				},
 				meetings: {
 					date: meetingInfo.meetingDate,
