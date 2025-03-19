@@ -30,36 +30,22 @@ type Props = {
 export default function RowItem(
 	props: Props
 ) {
-	const { queryId, item, userType } = props;
-	const [status, setStatus] = useState<ReferalStatusEnum>(item?.referalStatus);
-	const [enrolledEmployee, setEnrolledEmployee] = useState(item?.enrolledEmployee || ""); // Added state for enrolled employees
-	const [isEditing, setIsEditing] = useState(false); // Track if editing is enabled
-
-	const handleSave = () => {
-		// Save logic for enrolled employees
-		setIsEditing(false);
-		// TODO: Call backend to save the updated `enrolledEmployee` value
-	};
-
+	const { queryId, item, userType } =
+		props;
+	const [status, setStatus] =
+		useState<ReferalStatusEnum>(
+			item?.referalStatus
+		);
 	return (
 		<TableRow key={item?.id}>
-			<TableCell className="text-right">
+			<TableCell className="text	-right">
 				{item?.company.name}
 			</TableCell>
 			<TableCell className=" text-center">
-				{item?.company.estimatedNumberEmployee}
-			</TableCell>
-			<TableCell className="text-center">
-				{isEditing ? (
-					<input
-						type="number"
-						value={enrolledEmployee}
-						onChange={(e) => setEnrolledEmployee(e.target.value)}
-						className="p-1 border rounded-lg text-center"
-					/>
-				) : (
-					<span>{enrolledEmployee}</span>
-				)}
+				{
+					item?.company
+						.estimatedNumberEmployee
+				}
 			</TableCell>
 			<TableCell className=" text-center">
 				{item?.meetingBy}
@@ -67,27 +53,53 @@ export default function RowItem(
 			<TableCell
 				className=" text-center"
 				style={{
-					color: ReferalStatusColors[item.referalStatus] || "gray",
+					color:
+						ReferalStatusColors[
+							item.referalStatus
+						] || "gray",
 				}}
 			>
 				{queryId !== item?.id ? (
-					displayReferalStatus(item.referalStatus)
+					displayReferalStatus(
+						item.referalStatus
+					)
 				) : (
 					<select
 						className={` p-1 rounded-lg  text-white w-fit`}
 						style={{
-							backgroundColor: ReferalStatusColors[status] || "#ccc",
+							backgroundColor:
+								ReferalStatusColors[
+									status
+								] || "#ccc",
 						}}
-						onChange={(e) => setStatus(e.target.value as ReferalStatusEnum)}
+						onChange={(e) =>
+							setStatus(
+								e.target
+									.value as ReferalStatusEnum
+							)
+						}
 						value={status}
 					>
-						{Object.values(ReferalStatusEnum)
+						{Object.values(
+							ReferalStatusEnum
+						)
 							.filter(
-								(val) => ![ReferalStatusEnum.NONE, ReferalStatusEnum.OTHERS].includes(val)
+								(val) =>
+									![
+										ReferalStatusEnum.NONE,
+										ReferalStatusEnum.OTHERS,
+									].includes(val)
 							)
 							.map((status) => (
-								<option key={status} value={status}>
-									{status.replace(/_/g, " ")}
+								<option
+									key={status}
+									value={status}
+								>
+									{status.replace(
+										/_/g,
+										" "
+									)}{" "}
+									{/* Formatting */}
 								</option>
 							))}
 					</select>
@@ -97,35 +109,51 @@ export default function RowItem(
 				<TableCell className=" flex justify-end ">
 					{queryId === item?.id ? (
 						<div className=" flex flex-row gap-3 justify-end">
-							{isEditing ? (
-								<button
-									onClick={handleSave}
-									className="p-2 rounded-full bg-green-800"
-								>
-									<Check size={14} color={"white"} />
+							<Alert
+								status={status}
+								updateBy="referal"
+								id={queryId}
+							>
+								<button className=" p-2 rounded-full bg-green-800">
+									<Check
+										size={14}
+										color={"white"}
+									/>
 								</button>
-							) : (
-								<Alert status={status} updateBy="referal" id={queryId}>
-									<button className="p-2 rounded-full bg-green-800">
-										<Check size={14} color={"white"} />
-									</button>
-								</Alert>
-							)}
-							<Link href="/view-referal" className=" p-2 rounded-full bg-red-800">
-								<X size={14} color={"white"} />
+							</Alert>
+							<Link
+								href="/view-referal"
+								className=" p-2 rounded-full bg-red-800"
+							>
+								<X
+									size={14}
+									color={"white"}
+								/>
 							</Link>
 						</div>
 					) : (
-						<div className="flex flex-row justify-end flex-1 gap-4">
-							<button
-								onClick={() => setIsEditing(true)}
-								className="p-2 rounded-full bg-yellow-600"
+						<div className=" flex flex-row justify-end flex-1 gap-4">
+							<Link
+								href={`?id=${item?.id}`}
+								className=" p-2 rounded-full bg-yellow-600"
 							>
-								<Pencil size={14} color={"white"} />
-							</button>
-							<ViewModal id={item.id} userType={UserType.ADMIN} data={item}>
-								<button className="p-2 rounded-full bg-green-600 self-end">
-									<Eye size={14} color="white" />
+								<Pencil
+									size={14}
+									color={"white"}
+								/>
+							</Link>
+							<ViewModal
+								id={item.id}
+								userType={
+									UserType.ADMIN
+								}
+								data={item}
+							>
+								<button className=" p-2 rounded-full bg-green-600 self-end">
+									<Eye
+										size={14}
+										color="white"
+									/>
 								</button>
 							</ViewModal>
 						</div>
@@ -133,9 +161,16 @@ export default function RowItem(
 				</TableCell>
 			) : (
 				<TableCell className="flex justify-end">
-					<ViewModal id={item.id} userType={UserType.ADMIN} data={item}>
-						<button className="p-2 rounded-full bg-green-600 self-end">
-							<Eye size={14} color="white" />
+					<ViewModal
+						id={item.id}
+						userType={UserType.ADMIN}
+						data={item}
+					>
+						<button className=" p-2 rounded-full bg-green-600 self-end">
+							<Eye
+								size={14}
+								color="white"
+							/>
 						</button>
 					</ViewModal>
 				</TableCell>
