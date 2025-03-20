@@ -50,7 +50,7 @@ export default function RowItem(props: Props) {
                     min={''}
                 />
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-left">
                 {item?.meetingBy}
             </TableCell>
             <TableCell
