@@ -66,6 +66,10 @@ export default async function ViewReferal({
 						</TableHead>
 
 						<TableHead className=" text-center">
+							Enrolled Employee
+						</TableHead>
+
+						<TableHead className=" text-center">
 							Status
 						</TableHead>
 

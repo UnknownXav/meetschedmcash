@@ -23,6 +23,7 @@ export type ReferBy = {
 }
 
 export type ClientDto = {
+  enrolledEmployees: number;
   id: string
   referedBy: ReferBy
   company: CompanyDetailsDto
