@@ -34,7 +34,7 @@ export default function RowItem(props: Props) {
 
     return (
         <TableRow key={item?.id}>
-            <TableCell className="text-right">
+            <TableCell className="text-center">
                 {item?.company.name}
             </TableCell>
             <TableCell className="text-center">
@@ -47,7 +47,7 @@ export default function RowItem(props: Props) {
                     value={enrolledEmployees}
                     onChange={(e) => setEnrolledEmployees(Number(e.target.value))}
                     className="ml-2 p-1 w-16 text-center border rounded"
-                    min={0}
+                    min={''}
                 />
             </TableCell>
             <TableCell className="text-center">
