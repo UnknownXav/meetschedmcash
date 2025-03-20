@@ -243,30 +243,21 @@ export default function CreateClient() {
 				company: {
 					name: companyInfo.companyName,
 					email: companyInfo.email,
-					contactNumber:
-						companyInfo.contactNumber,
-					contactPerson:
-						companyInfo.contactPerson,
-					payrollStatus:
-						companyInfo.payrollStatus,
-					estimatedNumberEmployee:
-						companyInfo.estimatedNumberOfEmployee,
+					contactNumber: companyInfo.contactNumber,
+					contactPerson: companyInfo.contactPerson,
+					payrollStatus: companyInfo.payrollStatus,
+					estimatedNumberEmployee: companyInfo.estimatedNumberOfEmployee,
 				},
 				meetings: {
 					date: meetingInfo.meetingDate,
 					time: meetingInfo.meetingTime,
 					rmsEmail: meetingInfo.rms,
-					clientEmail:
-						meetingInfo.clientEmail,
+					clientEmail: meetingInfo.clientEmail,
 				},
-				meetingStatus:
-					MeetingStatusEnum.PENDING,
-				referalStatus:
-					ReferalStatusEnum.NONE,
-				dateCreated:
-					new Date().toISOString(),
-				dateUpdate:
-					new Date().toISOString(),
+				meetingStatus: MeetingStatusEnum.PENDING,
+				referalStatus: ReferalStatusEnum.NONE,
+				dateCreated: new Date().toISOString(),
+				dateUpdate: new Date().toISOString(),
 				dateOnboarded: null,
 				dateStarted: null,
 				referedBy: {
@@ -275,6 +266,7 @@ export default function CreateClient() {
 				},
 				meetingBy: meetingBy,
 				remarks: "",
+				enrolledEmployee: 0
 			};
 
 			const resp = await saveClient(
