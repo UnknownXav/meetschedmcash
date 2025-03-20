@@ -41,7 +41,6 @@ export default function RowItem(props: Props) {
                 {item?.company.estimatedNumberEmployee}
             </TableCell>
             <TableCell className="text-center">
-                {enrolledEmployees}
                 <input
                     type="number"
                     value={enrolledEmployees}
@@ -50,7 +49,7 @@ export default function RowItem(props: Props) {
                     min={''}
                 />
             </TableCell>
-            <TableCell className="text-left">
+            <TableCell className="text-justify">
                 {item?.meetingBy}
             </TableCell>
             <TableCell
