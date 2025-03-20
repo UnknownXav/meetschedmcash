@@ -53,16 +53,12 @@ export default async function ViewReferal({
 			<Table className=" max-w-[70%] m-auto">
 				<TableHeader>
 					<TableRow>
-						<TableHead className=" text-center">
+						<TableHead className=" text-left">
 							Company Name
 						</TableHead>
 
 						<TableHead className=" text-center">
 							Declared Headcount
-						</TableHead>
-
-						<TableHead className=" text-center">
-							Enrolled Employee
 						</TableHead>
 
 						<TableHead className="text-center">
