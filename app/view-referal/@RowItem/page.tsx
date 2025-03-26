@@ -31,6 +31,11 @@ export default function RowItem(props: Props) {
     const { queryId, item, userType } = props;
     const [status, setStatus] = useState<ReferalStatusEnum>(item?.referalStatus);
     const [enrolledEmployees, setEnrolledEmployees] = useState<number>(item?.enrolledEmployee || 0);
+    const [isEditable, setIsEditable] = useState<boolean>(false); // New state for edit mode
+
+    const handlePencilClick = () => {
+        setIsEditable(!isEditable); // Toggle edit mode
+    };
 
     return (
         <TableRow key={item?.id}>
@@ -40,14 +45,18 @@ export default function RowItem(props: Props) {
             <TableCell className="text-center">
                 {item?.company.estimatedNumberEmployee}
             </TableCell>
-            <TableCell className="text-center">
+            <TableCell className="text-center flex items-center">
                 <input
                     type="number"
                     value={enrolledEmployees}
                     onChange={(e) => setEnrolledEmployees(Number(e.target.value))}
-                    className="ml-2 p-1 w-16 text-center border rounded"
+                    className={`ml-2 p-1 w-16 text-center border rounded ${isEditable ? '' : 'bg-gray-200 cursor-not-allowed'}`}
+                    readOnly={!isEditable} // Toggle read-only based on edit mode
                     min={''}
                 />
+                <button onClick={handlePencilClick} className="ml-2">
+                    <Pencil size={16} color={isEditable ? "green" : "gray"} />
+                </button>
             </TableCell>
             <TableCell className="text-justify">
                 {item?.meetingBy}
