@@ -1,7 +1,8 @@
 "use client";
+
 import Alert from "@/app/view-meetings/@Alert/page";
 import ViewModal from "@/app/view-meetings/@ViewModal/page";
-import { TableCell, TableRow } from "@/data/components/ui/table";
+import { TableBody, TableCell, TableRow } from "@/data/components/ui/table";
 import { ClientDto } from "@/lib/dto/Client.dto";
 import { UserType } from "@/lib/dto/User.dto";
 import {
@@ -12,8 +13,31 @@ import { displayReferalStatus } from "@/lib/utils/meeting.utils";
 import { Check, Eye, Pencil, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { doc, updateDoc } from "firebase/firestore"; // Firestore methods
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+
+const resp = (await getReferal(id, userType, { limit: 10, page: 1 })) as Array<ClientDto>;
+
+<button
+  onClick={() => fetchNextPage()}
+  className="mt-4 bg-blue-500 text-white px-4 py-2"
+>
+  Load More
+</button>;
+
+<TableBody>
+  {resp.length > 0 ? (
+    resp.map((val) => (
+      <RowItem userType={userType} key={val.id} item={val} queryId={queryId} />
+    ))
+  ) : (
+    <tr>
+      <td colSpan={6} className="text-center p-4">
+        No referrals found.
+      </td>
+    </tr>
+  )}
+</TableBody>;
 
 type Props = {
   queryId: string;
@@ -31,7 +55,7 @@ export default function RowItem(props: Props) {
   // Function to update enrolled employees in Firestore
   const updateEnrolledEmployees = async (newValue: number) => {
     try {
-      const docRef = doc(db, "client", item.id); // Assuming "clients" is your collection name
+      const docRef = doc(db, "client", item.id);
       await updateDoc(docRef, {
         enrolledEmployee: newValue,
       });
@@ -44,54 +68,44 @@ export default function RowItem(props: Props) {
   const handleEnrolledEmployeesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newEnrolledEmployees = Number(e.target.value);
     setEnrolledEmployees(newEnrolledEmployees);
-    updateEnrolledEmployees(newEnrolledEmployees); // Save to Firebase when changed
+    updateEnrolledEmployees(newEnrolledEmployees);
   };
 
   return (
     <TableRow key={item?.id}>
       <TableCell className="text-justify">{item?.company.name}</TableCell>
+      <TableCell className="text-center">{item?.company.estimatedNumberEmployee}</TableCell>
       <TableCell className="text-center">
-        {item?.company.estimatedNumberEmployee}
-      </TableCell>
-      <TableCell className="text-center">
-       {userType === UserType.MCASH ? (
-                    <input
-					type="number"
-					value={enrolledEmployees}
-					onChange={handleEnrolledEmployeesChange}
-					className="ml-2 p-1 w-16 text-center border rounded"
-					min={0}
-                    />
-                ) : (
-                    <span>{enrolledEmployees}</span>
-                )}
+        {userType === UserType.MCASH ? (
+          <input
+            type="number"
+            value={enrolledEmployees}
+            onChange={handleEnrolledEmployeesChange}
+            className="ml-2 p-1 w-16 text-center border rounded"
+            min={0}
+          />
+        ) : (
+          <span>{enrolledEmployees}</span>
+        )}
       </TableCell>
       <TableCell className="text-justify">{item?.meetingBy}</TableCell>
       <TableCell
         className="text-center"
-        style={{
-          color: ReferalStatusColors[item.referalStatus] || "gray",
-        }}
+        style={{ color: ReferalStatusColors[item.referalStatus] || "gray" }}
       >
         {queryId !== item?.id ? (
           displayReferalStatus(item.referalStatus)
         ) : (
           <select
             className="p-1 rounded-lg text-white w-fit"
-            style={{
-              backgroundColor: ReferalStatusColors[status] || "#ccc",
-            }}
+            style={{ backgroundColor: ReferalStatusColors[status] || "#ccc" }}
             onChange={(e) => setStatus(e.target.value as ReferalStatusEnum)}
             value={status}
           >
             {Object.values(ReferalStatusEnum)
-              .filter(
-                (val) => ![ReferalStatusEnum.NONE, ReferalStatusEnum.OTHERS].includes(val)
-              )
+              .filter((val) => ![ReferalStatusEnum.NONE, ReferalStatusEnum.OTHERS].includes(val))
               .map((status) => (
-                <option key={status} value={status}>
-                  {status.replace(/_/g, " ")}
-                </option>
+                <option key={status} value={status}>{status.replace(/_/g, " ")}</option>
               ))}
           </select>
         )}
@@ -106,15 +120,12 @@ export default function RowItem(props: Props) {
                 </button>
               </Alert>
               <Link href="/view-referal" className="p-2 rounded-full bg-red-800">
-                <X size={14} color={"white"} />			
+                <X size={14} color={"white"} />
               </Link>
             </div>
           ) : (
             <div className="flex flex-row justify-end flex-1 gap-4">
-              <Link
-                href={`?id=${item?.id}`}
-                className="p-2 rounded-full bg-yellow-600"
-              >
+              <Link href={`?id=${item?.id}`} className="p-2 rounded-full bg-yellow-600">
                 <Pencil size={14} color={"white"} />
               </Link>
               <ViewModal id={item.id} userType={UserType.ADMIN} data={item}>
