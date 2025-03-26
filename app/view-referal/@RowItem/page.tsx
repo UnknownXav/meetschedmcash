@@ -54,13 +54,17 @@ export default function RowItem(props: Props) {
         {item?.company.estimatedNumberEmployee}
       </TableCell>
       <TableCell className="text-center">
-        <input
-          type="number"
-          value={enrolledEmployees}
-          onChange={handleEnrolledEmployeesChange}
-          className="ml-2 p-1 w-16 text-center border rounded"
-          min={0} // Assuming the minimum value is 0
-        />
+	  {userType === UserType.MCASH ? (
+                    <input
+                        type="number"
+                        value={enrolledEmployees}
+                        onChange={(e) => setEnrolledEmployees(Number(e.target.value))}
+                        className="ml-2 p-1 w-16 text-center border rounded"
+                        min={''}
+                    />
+                ) : (
+                    <span>{enrolledEmployees}</span>
+                )}
       </TableCell>
       <TableCell className="text-justify">{item?.meetingBy}</TableCell>
       <TableCell
@@ -102,7 +106,7 @@ export default function RowItem(props: Props) {
                 </button>
               </Alert>
               <Link href="/view-referal" className="p-2 rounded-full bg-red-800">
-                <X size={14} color={"white"} />
+                <X size={14} color={"white"} />			
               </Link>
             </div>
           ) : (
