@@ -54,13 +54,13 @@ export default function RowItem(props: Props) {
         {item?.company.estimatedNumberEmployee}
       </TableCell>
       <TableCell className="text-center">
-	  {userType === UserType.MCASH ? (
+       {userType === UserType.MCASH ? (
                     <input
-                        type="number"
-                        value={enrolledEmployees}
-                        onChange={(e) => setEnrolledEmployees(Number(e.target.value))}
-                        className="ml-2 p-1 w-16 text-center border rounded"
-                        min={''}
+					type="number"
+					value={enrolledEmployees}
+					onChange={handleEnrolledEmployeesChange}
+					className="ml-2 p-1 w-16 text-center border rounded"
+					min={0}
                     />
                 ) : (
                     <span>{enrolledEmployees}</span>
